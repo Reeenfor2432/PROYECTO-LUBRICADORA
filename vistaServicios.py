@@ -5,7 +5,7 @@ from tkinter import ttk
 class vistaServicio:
     def administrarServicio(self,base, callback=None):
         groupBox= LabelFrame(base, text="Datos del Servicio", padx=10, pady=10 )
-        groupBox.pack(pady=20)
+        groupBox.pack(pady=10)
 
         labelId= Label(groupBox, text= "Identificación del servicio:", width=25, font=("arial",12))
         labelId.grid(row=0, column=0)

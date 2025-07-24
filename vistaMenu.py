@@ -3,6 +3,7 @@ from tkinter import *
 from vistaCliente import vistaCliente
 from vistaEmpleado import vistaEmpleado
 from vistaServicios import vistaServicio
+from vistaInventario import vistaInventario
 
 class menu:
     #Inicializa el menu y lo muestra
@@ -26,6 +27,8 @@ class menu:
         btnEmpleado.pack(pady=10)
         btnServicio= Button(self.base, text="Administrar servicios", width=20, command=self.mostrarServicio)
         btnServicio.pack(pady=10)
+        btnInventario= Button(self.base, text="Administrar Inventario", width=20, command=self.mostrarInventario)
+        btnInventario.pack(pady=10)
     #Falta....
 
     #Metodo para mostrar la vista cliente (para gerente)
@@ -44,4 +47,9 @@ class menu:
         self.limpiarVentana()
         vistaservicio= vistaServicio()
         vistaservicio.administrarServicio(self.base, self.mostrarMenu)
+    
+    def mostrarInventario(self):
+        self.limpiarVentana()
+        vistainv = vistaInventario()
+        vistainv.administrarInventario(self.base, self.mostrarMenu)
 
