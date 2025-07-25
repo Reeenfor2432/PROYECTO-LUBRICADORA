@@ -1,7 +1,8 @@
 CREATE DATABASE LUBRICONTROL;
 
 CREATE TABLE cliente (
-	cedula CHAR(10) PRIMARY KEY,
+	id_cliente INT AUTO_INCREMENT PRIMARY KEY,
+	cedula CHAR(10),
 	nombre_cliente VARCHAR(60),
 	telefono VARCHAR(15),
 	frecuente TINYINT(1)
@@ -9,12 +10,12 @@ CREATE TABLE cliente (
 
 CREATE TABLE vehiculo(
 	placa CHAR(7) PRIMARY KEY,
-	cedula CHAR(7),
+	id_cliente INT,
 	marca VARCHAR(20),
 	color VARCHAR(20),
 	modelo VARCHAR(40),
 	año YEAR,
-	FOREIGN KEY(cedula) REFERENCES cliente(cedula)
+	FOREIGN KEY(id_cliente) REFERENCES cliente(id_cliente)
 );
 
 CREATE TABLE factura(
@@ -93,13 +94,13 @@ CREATE TABLE producto_usado(
 
 CREATE TABLE cita(
 	id_cita INT AUTO_INCREMENT PRIMARY KEY,
-	cedula CHAR(10),
+	id_cliente INT,
 	placa CHAR(7),
 	id_empleado INT,
 	hora_ingreso DATETIME,
 	hora_salida DATETIME,
 	estado ENUM('pendiente','en_proceso','finalizado','cancelado'),
-	FOREIGN KEY(cedula) REFERENCES clientes(cedula),
+	FOREIGN KEY(id_cliente) REFERENCES clientes(id_cliente),
 	FOREIGN KEY(placa) REFERENCES vehiculo(placa),
 	FOREIGN KEY(id_empleado) REFERENCES empleados(id_empleado)
 );
