@@ -1,14 +1,14 @@
 CREATE DATABASE LUBRICONTROL;
 
 CREATE TABLE cliente (
-	cedula CHAR(10) AUTO_INCREMENT PRIMARY KEY,
+	cedula CHAR(10) PRIMARY KEY,
 	nombre_cliente VARCHAR(60),
 	telefono VARCHAR(15),
 	frecuente TINYINT(1)
 );
 
 CREATE TABLE vehiculo(
-	placa CHAR(7) AUTO_INCREMENT PRIMARY KEY,
+	placa CHAR(7) PRIMARY KEY,
 	cedula CHAR(7),
 	marca VARCHAR(20),
 	color VARCHAR(20),
