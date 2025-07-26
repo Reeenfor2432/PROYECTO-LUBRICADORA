@@ -1,8 +1,10 @@
 import tkinter as tk
 from tkinter import*
+from claseUtilitaria import claseUtilitaria
 
 class vistaCitasCompletas:
-        def mostrarCitasCompletas(self,base, callback):
-            #SQL.....
-            groupbox= LabelFrame(base, text="Reportes", padx=10, pady=10)
-            groupbox.pack(pady=10)
+        def mostrarCitasCompletas(self,tabla):
+            return None
+            #SQL...
+            
+            

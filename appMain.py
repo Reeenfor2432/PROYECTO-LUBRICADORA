@@ -1,5 +1,5 @@
 import tkinter as tk
-from vistaMenuGerente import menu
+from vistaMenuPrincipal import menu
 
 class appMain:
     def __init__(self):
