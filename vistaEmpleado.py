@@ -30,11 +30,11 @@ class vistaEmpleado(vistaPersona):
         groupBox= LabelFrame(base,text="Lista de Empleados", padx=5,pady=5,)
         groupBox.pack(pady=10)
         #Crecion de TreeView (widget que permite mostrar tablas)
-        tabla= ttk.Treeview(groupBox,columns=("id_empleado","id_rol","nombre", "telefono_emp","domicilio"), show="headings", height=5,)
+        tabla= ttk.Treeview(groupBox,columns=("id_empleado","id_rol","nombre", "telefono","domicilio"), show="headings", height=5,)
         tabla.heading("id_empleado", text="Identificacion")
         tabla.heading("id_rol", text="Rol")
         tabla.heading("nombre", text= "Nombre del empleado")
-        tabla.heading("telefono_emp", text= "Telefono")
+        tabla.heading("telefono", text= "Telefono")
         tabla.heading("domicilio", text= "Domicilio")
         tabla.pack()
 
