@@ -6,7 +6,7 @@ CREATE TABLE cliente (
 	nombre_cliente VARCHAR(60),
 	telefono VARCHAR(15),
 	frecuente TINYINT(1)
-);
+)AUTO_INCREMENT=100;
 
 CREATE TABLE vehiculo(
 	placa CHAR(7) PRIMARY KEY,
@@ -27,7 +27,7 @@ CREATE TABLE factura(
 	impuesto DECIMAL(5,2),
 	descuento DECIMAL(5,2),
 	FOREIGN KEY(cita) REFERENCES cita(id_cita)
-);
+)AUTO_INCREMENT=1000;
 
 CREATE TABLE empleado(
 	id_empleado INT AUTO_INCREMENT PRIMARY KEY,
@@ -36,7 +36,7 @@ CREATE TABLE empleado(
 	telefono VARCHAR(15),
 	domicilio VARCHAR(100),
 	FOREIGN KEY(id_rol) REFERENCES rol(id_rol)
-);
+)AUTO_INCREMENT=100;
 
 CREATE TABLE rol (
 	id_rol INT AUTO_INCREMENT PRIMARY KEY,
@@ -59,7 +59,7 @@ CREATE TABLE servicio (
 	nombre VARCHAR(100),
 	descripcion VARCHAR(100),
 	precio DECIMAL(8,2)
-);
+)AUTO_INCREMENT=1000;
 
 CREATE TABLE producto(
 	id_producto INT AUTO_INCREMENT PRIMARY KEY,
@@ -99,8 +99,8 @@ CREATE TABLE cita(
 	id_empleado INT,
 	hora_ingreso DATETIME,
 	hora_salida DATETIME,
-	estado ENUM('pendiente','en_proceso','finalizado','cancelado'),
+	estado ENUM('pendiente','en_proceso','finalizado','cancelado') DEFAULT 'pendiente' ,
 	FOREIGN KEY(id_cliente) REFERENCES clientes(id_cliente),
 	FOREIGN KEY(placa) REFERENCES vehiculo(placa),
 	FOREIGN KEY(id_empleado) REFERENCES empleados(id_empleado)
-);
+)AUTO_INCREMENT=1000;
