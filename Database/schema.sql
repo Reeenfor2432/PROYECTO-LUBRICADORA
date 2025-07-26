@@ -19,13 +19,12 @@ CREATE TABLE vehiculo(
 	FOREIGN KEY(id_cliente) REFERENCES cliente(id_cliente)
 );
 
-<<<<<<< HEAD
 CREATE TABLE rol (
 	id_rol INT AUTO_INCREMENT PRIMARY KEY,
 	nombre_rol VARCHAR(30),
 	descripcion VARCHAR(300)
 );
-=======
+
 CREATE TABLE factura(
 	id_factura INT AUTO_INCREMENT PRIMARY KEY,
 	cita INT,
@@ -36,7 +35,6 @@ CREATE TABLE factura(
 	descuento DECIMAL(5,2),
 	FOREIGN KEY(cita) REFERENCES cita(id_cita)
 )AUTO_INCREMENT=1000;
->>>>>>> 30a3c48e99e6a4467cedd21a939be1d153c133b7
 
 CREATE TABLE empleado(
 	id_empleado INT AUTO_INCREMENT PRIMARY KEY,
@@ -46,8 +44,6 @@ CREATE TABLE empleado(
 	domicilio VARCHAR(100),
 	FOREIGN KEY(id_rol) REFERENCES rol(id_rol)
 )AUTO_INCREMENT=100;
-<<<<<<< HEAD
-=======
 
 CREATE TABLE Detalle_Servicio (
 	id_cita INT,
@@ -58,7 +54,6 @@ CREATE TABLE Detalle_Servicio (
 	FOREIGN KEY (id_servicio) REFERENCES Servicios(id_servicio),
 	FOREIGN KEY (id_empleado) REFERENCES Empleados(id_empleado)
 );
->>>>>>> 30a3c48e99e6a4467cedd21a939be1d153c133b7
 
 CREATE TABLE servicio (
 	id_servicio INT AUTO_INCREMENT PRIMARY KEY,
@@ -66,7 +61,6 @@ CREATE TABLE servicio (
 	descripcion VARCHAR(100),
 	precio DECIMAL(8,2)
 )AUTO_INCREMENT=1000;
-<<<<<<< HEAD
 
 CREATE TABLE marca_producto(
 	id_marca INT AUTO_INCREMENT PRIMARY KEY , 	
@@ -77,8 +71,6 @@ CREATE TABLE categoria(
 	id_categoria INT AUTO_INCREMENT PRIMARY KEY ,
 	nombre_categoria VARCHAR(40)
 );
-=======
->>>>>>> 30a3c48e99e6a4467cedd21a939be1d153c133b7
 
 CREATE TABLE producto(
 	id_producto INT AUTO_INCREMENT PRIMARY KEY,
@@ -134,8 +126,6 @@ CREATE TABLE producto_usado(
 	FOREIGN KEY(id_cita) REFERENCES cita(id_cita),
 	FOREIGN KEY(id_producto) REFERENCES producto(id_producto)
 );
-<<<<<<< HEAD
-=======
 
 CREATE TABLE cita(
 	id_cita INT AUTO_INCREMENT PRIMARY KEY,
@@ -149,4 +139,3 @@ CREATE TABLE cita(
 	FOREIGN KEY(placa) REFERENCES vehiculo(placa),
 	FOREIGN KEY(id_empleado) REFERENCES empleados(id_empleado)
 )AUTO_INCREMENT=1000;
->>>>>>> 30a3c48e99e6a4467cedd21a939be1d153c133b7
