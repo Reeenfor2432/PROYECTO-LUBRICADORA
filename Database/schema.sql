@@ -38,7 +38,7 @@ CREATE TABLE servicio (
 	nombre VARCHAR(100),
 	descripcion VARCHAR(100),
 	precio DECIMAL(8,2)
-)AUTO_INCREMENT=1000;
+)AUTO_INCREMENT=100;
 
 CREATE TABLE marca_producto(
 	id_marca INT AUTO_INCREMENT PRIMARY KEY , 	
@@ -73,7 +73,7 @@ CREATE TABLE cita(
 	FOREIGN KEY(id_cliente) REFERENCES cliente(id_cliente),  
 	FOREIGN KEY(placa) REFERENCES vehiculo(placa),
 	FOREIGN KEY(id_empleado) REFERENCES empleado(id_empleado)	
-)AUTO_INCREMENT=1000;
+)AUTO_INCREMENT=100;
 
 CREATE TABLE factura(
 	id_factura INT AUTO_INCREMENT PRIMARY KEY,
@@ -84,7 +84,7 @@ CREATE TABLE factura(
 	impuesto DECIMAL(5,2),
 	descuento DECIMAL(5,2),
 	FOREIGN KEY(cita) REFERENCES cita(id_cita)
-)AUTO_INCREMENT=1000;
+)AUTO_INCREMENT=100;
 
 CREATE TABLE producto_usado(
 	id_cita INT,
