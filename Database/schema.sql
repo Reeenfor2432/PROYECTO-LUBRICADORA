@@ -6,6 +6,7 @@ CREATE TABLE cliente (
 	cedula CHAR(10),
 	nombre_cliente VARCHAR(60),
 	telefono VARCHAR(15),
+	frecuente TINYINT(1)
 )AUTO_INCREMENT=100;
 
 CREATE TABLE vehiculo(
@@ -22,7 +23,7 @@ CREATE TABLE rol (
 	id_rol INT AUTO_INCREMENT PRIMARY KEY,
 	nombre_rol VARCHAR(30),
 	descripcion VARCHAR(300)
-)AUTO_INCREMENT=100;;
+)AUTO_INCREMENT=100;
 
 CREATE TABLE empleado(
 	id_empleado INT AUTO_INCREMENT PRIMARY KEY,
@@ -104,4 +105,5 @@ CREATE TABLE Detalle_Servicio (
 	FOREIGN KEY (id_servicio) REFERENCES Servicio(id_servicio),	
 	FOREIGN KEY (id_empleado) REFERENCES Empleado(id_empleado)
 );
+
 
