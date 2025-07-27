@@ -23,7 +23,7 @@ CREATE TABLE rol (
 	id_rol INT AUTO_INCREMENT PRIMARY KEY,
 	nombre_rol VARCHAR(30),
 	descripcion VARCHAR(300)
-);
+)AUTO_INCREMENT=100;;
 
 CREATE TABLE empleado(
 	id_empleado INT AUTO_INCREMENT PRIMARY KEY,
@@ -44,12 +44,12 @@ CREATE TABLE servicio (
 CREATE TABLE marca_producto(
 	id_marca INT AUTO_INCREMENT PRIMARY KEY , 	
 	nombre_marca VARCHAR(40)
-);
+)AUTO_INCREMENT=100;
 
 CREATE TABLE categoria(
 	id_categoria INT AUTO_INCREMENT PRIMARY KEY ,
 	nombre_categoria VARCHAR(40)
-);
+)AUTO_INCREMENT=100;
 
 CREATE TABLE producto(
 	id_producto INT AUTO_INCREMENT PRIMARY KEY,
@@ -61,7 +61,7 @@ CREATE TABLE producto(
 	id_categoria INT,
 	FOREIGN KEY(id_marca) REFERENCES marca_producto(id_marca),
 	FOREIGN KEY(id_categoria) REFERENCES categoria(id_categoria)
-);
+)AUTO_INCREMENT=100;
 
 CREATE TABLE cita(
 	id_cita INT AUTO_INCREMENT PRIMARY KEY,
