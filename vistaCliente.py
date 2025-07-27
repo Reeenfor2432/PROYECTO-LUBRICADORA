@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import ttk, messagebox
 from vistaPersona import vistaPersona
+from claseUtilitaria import claseUtilitaria
 from Guardado_de_datos.AgregarClientes import Aggclientes
 
 
@@ -14,7 +15,7 @@ class vistaCliente(vistaPersona):
         super().interfazBase(groupBox)
 
         # Botones de acción
-        Button(groupBox, text="Añadir", width=15, command=self.guardarRegistros).grid(row=4, column=0)
+        Button(groupBox, text="Añadir", width=15, command=self.guardarRegistrosCliente).grid(row=4, column=0)
         Button(groupBox, text="Modificar", width=15).grid(row=4, column=1)
         Button(groupBox, text="Eliminar", width=15).grid(row=4, column=2, padx=(40, 40))
 
@@ -29,16 +30,16 @@ class vistaCliente(vistaPersona):
         self.tabla.pack()
 
         # Evento al seleccionar un registro
-        self.tabla.bind("<<TreeviewSelect>>", self.seleccionarRegistro)
+        self.tabla.bind("<<TreeviewSelect>>", self.seleccionarRegistroCliente)
 
         # Cargar los datos en la tabla
-        self.actualizarVistaTabla()
+        claseUtilitaria.actualizarVistaTabla(self.tabla, Aggclientes.MostrarClientes())
 
         # Botón para volver al menú
         if callback:
             Button(base, text="Volver al menú", command=callback).pack(pady=10)
 
-    def guardarRegistros(self):
+    def guardarRegistrosCliente(self):
         try:
             cedula = self.texBoxCe.get()
             nombre = self.texBoxNom.get()
@@ -53,23 +54,13 @@ class vistaCliente(vistaPersona):
             self.texBoxTel.delete(0, END)
 
             # Actualizar tabla
-            self.actualizarVistaTabla()
+            claseUtilitaria.actualizarVistaTabla(self.tabla, Aggclientes.MostrarClientes())
 
         except ValueError as error:
             print("Error al ingresar los datos: {}".format(error))
 
-    def actualizarVistaTabla(self):
-        try:
-            self.tabla.delete(*self.tabla.get_children())  # limpiar tabla
 
-            datos = Aggclientes.MostrarClientes()
-            for row in datos:
-                self.tabla.insert("", "end", values=row)
-
-        except Exception as error:
-            print("Error al actualizar tabla: {}".format(error))
-
-    def seleccionarRegistro(self, event):
+    def seleccionarRegistroCliente(self, event):
         try:
             itemSeleccionado = self.tabla.focus()
 

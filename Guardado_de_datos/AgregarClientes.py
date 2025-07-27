@@ -7,12 +7,13 @@ class Aggclientes:
             cursor = conec.cursor()
             cursor.execute("SELECT cedula,nombre_cliente,telefono FROM cliente;")
             resultado = cursor.fetchall()
-            conec.commit()
             conec.close()
             return resultado
         
         except mysql.connector.Error as error:
             print("Error al intentar mostrar los datos {}".format(error))
+        finally:
+            conec.close()
 
 
 
@@ -26,9 +27,9 @@ class Aggclientes:
             cursor.execute(sql,valores)
             conec.commit()
             print(cursor.rowcount,"Registro ingresado con exito")
-            conec.close()
-
         except mysql.connector.Error as error:
             print("Error al intentar ingresar los datos {}".format(error))
+        finally:
+            conec.close()
 
 
