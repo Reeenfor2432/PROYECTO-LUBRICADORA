@@ -5,8 +5,7 @@ CREATE TABLE cliente (
 	id_cliente INT AUTO_INCREMENT PRIMARY KEY,
 	cedula CHAR(10),
 	nombre_cliente VARCHAR(60),
-	telefono VARCHAR(15),
-	frecuente TINYINT(1)
+	telefono VARCHAR(15)
 )AUTO_INCREMENT=100;
 
 CREATE TABLE vehiculo(
