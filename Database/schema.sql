@@ -25,17 +25,6 @@ CREATE TABLE rol (
 	descripcion VARCHAR(300)
 );
 
-CREATE TABLE factura(
-	id_factura INT AUTO_INCREMENT PRIMARY KEY,
-	cita INT,
-	numero_factura VARCHAR(60) UNIQUE,
-	subtotal DECIMAL(10,2),
-	total DECIMAL(10,2),
-	impuesto DECIMAL(5,2),
-	descuento DECIMAL(5,2),
-	FOREIGN KEY(cita) REFERENCES cita(id_cita)
-)AUTO_INCREMENT=1000;
-
 CREATE TABLE empleado(
 	id_empleado INT AUTO_INCREMENT PRIMARY KEY,
 	id_rol INT,
@@ -44,16 +33,6 @@ CREATE TABLE empleado(
 	domicilio VARCHAR(100),
 	FOREIGN KEY(id_rol) REFERENCES rol(id_rol)
 )AUTO_INCREMENT=100;
-
-CREATE TABLE Detalle_Servicio (
-	id_cita INT,
-	id_servicio INT,
-	id_empleado INT,
-	PRIMARY KEY (id_cita, id_servicio, id_empleado),
-	FOREIGN KEY (id_cita) REFERENCES citas(id_cita),
-	FOREIGN KEY (id_servicio) REFERENCES Servicios(id_servicio),
-	FOREIGN KEY (id_empleado) REFERENCES Empleados(id_empleado)
-);
 
 CREATE TABLE servicio (
 	id_servicio INT AUTO_INCREMENT PRIMARY KEY,
@@ -108,6 +87,15 @@ CREATE TABLE factura(
 	FOREIGN KEY(cita) REFERENCES cita(id_cita)
 )AUTO_INCREMENT=1000;
 
+CREATE TABLE producto_usado(
+	id_cita INT,
+	id_producto INT,
+	cantidad INT,
+	PRIMARY KEY(id_cita,id_producto),
+	FOREIGN KEY(id_cita) REFERENCES cita(id_cita),
+	FOREIGN KEY(id_producto) REFERENCES producto(id_producto)
+);
+
 CREATE TABLE Detalle_Servicio (
 	id_cita INT,
 	id_servicio INT,
@@ -118,24 +106,3 @@ CREATE TABLE Detalle_Servicio (
 	FOREIGN KEY (id_empleado) REFERENCES Empleado(id_empleado)
 );
 
-CREATE TABLE producto_usado(
-	id_cita INT,
-	id_producto INT,
-	cantidad INT,
-	PRIMARY KEY(id_cita,id_producto),
-	FOREIGN KEY(id_cita) REFERENCES cita(id_cita),
-	FOREIGN KEY(id_producto) REFERENCES producto(id_producto)
-);
-
-CREATE TABLE cita(
-	id_cita INT AUTO_INCREMENT PRIMARY KEY,
-	id_cliente INT,
-	placa CHAR(7),
-	id_empleado INT,
-	hora_ingreso DATETIME,
-	hora_salida DATETIME,
-	estado ENUM('pendiente','en_proceso','finalizado','cancelado') DEFAULT 'pendiente' ,
-	FOREIGN KEY(id_cliente) REFERENCES clientes(id_cliente),
-	FOREIGN KEY(placa) REFERENCES vehiculo(placa),
-	FOREIGN KEY(id_empleado) REFERENCES empleados(id_empleado)
-)AUTO_INCREMENT=1000;
