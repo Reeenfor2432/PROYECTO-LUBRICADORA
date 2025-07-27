@@ -6,7 +6,6 @@ CREATE TABLE cliente (
 	cedula CHAR(10),
 	nombre_cliente VARCHAR(60),
 	telefono VARCHAR(15),
-	frecuente TINYINT(1)
 )AUTO_INCREMENT=100;
 
 CREATE TABLE vehiculo(
