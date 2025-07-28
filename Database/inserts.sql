@@ -6,11 +6,11 @@ INSERT INTO cliente (cedula, nombre_cliente, telefono) VALUES
 ('0923456789', 'Carlos Vera', '0978563412'),
 ('0934567890', 'Diana Castillo', '0967451230'),
 ('0945678901', 'Luis Zambrano', '0956342871'),
-('0954781234', 'Kevin Reinoso', '0998754312', 1),
-('0923894738', 'Andrea Paredes', '0987234678', 0),
-('0939123478', 'Marco Arce', '0978123478', 1),
-('0967892345', 'Sofía Aguilar', '0967123456', 0),
-('0912349876', 'Fernando Gavilánez', '0956347821', 1);
+('0954781234', 'Kevin Reinoso', '0998754312'),
+('0923894738', 'Andrea Paredes', '0987234678'),
+('0939123478', 'Marco Arce', '0978123478'),
+('0967892345', 'Sofía Aguilar', '0967123456'),
+('0912349876', 'Fernando Gavilánez', '0956347821');
 
 INSERT INTO vehiculo (placa, id_cliente, marca, color, modelo, año) VALUES
 ('ABC0123', 100, 'Chevrolet', 'Blanco', 'Aveo Family', 2012),
@@ -138,3 +138,4 @@ INSERT INTO Detalle_Servicio (id_cita, id_servicio, id_empleado) VALUES
 (107, 107, 107),
 (108, 108, 108),
 (109, 109, 109);
+
