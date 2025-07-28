@@ -2,6 +2,8 @@ import tkinter as tk
 from tkinter import *
 from tkinter import ttk
 from consultas_reportes.vistaReporteCita import vistaReporteCita
+from consultas_reportes.vistaReporteProductosStock import vistaReporteProductosStock
+from consultas_reportes.vistaReporteIngresoPorServ import vistaReporteIngreso
 from claseUtilitaria import claseUtilitaria
 
 class vistaReporte:
@@ -17,9 +19,9 @@ class vistaReporte:
         #Botones para reportes (faltan command)
         btnCitas= Button(groupbox, text="Mostrar reportes de citas", width=70, command= self.mostrarVistaReporteCita)
         btnCitas.grid(row=0,column=0)
-        btnStock=Button(groupbox, text="Mostrar los productos con stock menor a 5", width=70)
+        btnStock=Button(groupbox, text="Mostrar los productos con stock menor a 5", width=70, command=self.mostrarVistaReporteStock)
         btnStock.grid(row=1,column=0)
-        btnIngreso= Button(groupbox, text="Mostrar el ingreso total por servicio", width=70)
+        btnIngreso= Button(groupbox, text="Mostrar el ingreso total por servicio", width=70, command=self.mostrarVistaReporteIngreso)
         btnIngreso.grid(row=2,column=0)
 
         if callbackMenu:
@@ -30,3 +32,12 @@ class vistaReporte:
         claseUtilitaria.limpiarVentana(self.base)
         vistacitas= vistaReporteCita()
         vistacitas.interfazReporteCita(self.base, lambda base: self.interfazReporte(base, self.callbackMenu))
+    
+    def mostrarVistaReporteStock(self):
+        vistaprod= vistaReporteProductosStock()
+        vistaprod.interfazReporteStock(self.base)
+
+    def mostrarVistaReporteIngreso(self):
+        vistaingreso= vistaReporteIngreso()
+        vistaingreso.interfazReporteIngreso(self.base)
+        
