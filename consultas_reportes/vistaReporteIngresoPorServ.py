@@ -15,6 +15,7 @@ class vistaReporteIngreso:
 
         self.tabla.pack(pady=10)
         self.actualizarVistaTabla()
+        return groupBox
 
     def actualizarVistaTabla(self):
         try:

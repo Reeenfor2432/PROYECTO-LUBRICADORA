@@ -11,6 +11,7 @@ class vistaReporte:
     def interfazReporte(self,base,callbackMenu=None):
         self.base=base
         self.callbackMenu= callbackMenu
+        self.groupBoxAnterior= None
 
         claseUtilitaria.limpiarVentana(base)
         groupbox= LabelFrame(base, text="Reportes", padx=10, pady=10)
@@ -34,10 +35,12 @@ class vistaReporte:
         vistacitas.interfazReporteCita(self.base, lambda base: self.interfazReporte(base, self.callbackMenu))
     
     def mostrarVistaReporteStock(self):
+        claseUtilitaria.eliminarGroupbox(self.groupBoxAnterior)
         vistaprod= vistaReporteProductosStock()
-        vistaprod.interfazReporteStock(self.base)
+        self.groupBoxAnterior= vistaprod.interfazReporteStock(self.base)
 
     def mostrarVistaReporteIngreso(self):
+        claseUtilitaria.eliminarGroupbox(self.groupBoxAnterior)
         vistaingreso= vistaReporteIngreso()
-        vistaingreso.interfazReporteIngreso(self.base)
+        self.groupBoxAnterior= vistaingreso.interfazReporteIngreso(self.base)
         

@@ -76,3 +76,13 @@ class claseUtilitaria:
 
         except Exception as error:
             print("Error al actualizar tabla: {}".format(error))
+
+    @staticmethod
+    def eliminarTabla(tabla):
+        if tabla is not None:
+            tabla.destroy()
+    
+    @staticmethod
+    def eliminarGroupbox(groupbox):
+        if groupbox is not None:
+            groupbox.destroy()

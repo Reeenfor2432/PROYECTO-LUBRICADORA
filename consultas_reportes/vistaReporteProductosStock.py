@@ -26,6 +26,7 @@ class vistaReporteProductosStock:
         self.tabla.column("id_categoria",width=90, anchor="w")
         self.tabla.pack(pady=10)
         self.actualizarVistaTabla()
+        return groupBox
 
     def actualizarVistaTabla(self):
         try:
