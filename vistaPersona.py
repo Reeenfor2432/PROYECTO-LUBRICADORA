@@ -14,7 +14,7 @@ class vistaPersona:
         self.texBoxId.grid(row=0, column=1)  # Ubicación en la interfaz gráfica
 
         # Crear un campo para la cédula de identidad
-        labelCe = Label(container, text="Ingrese identificación:", width=25, font=("arial", 12)).grid(row=1, column=0)
+        labelCe = Label(container, text="Ingrese identificación adicional:", width=30, font=("arial", 12)).grid(row=1, column=0)
         self.texBoxCe = Entry(container)  # Campo de entrada para cédula
         self.texBoxCe.grid(row=1, column=1)  # Ubicación en la interfaz gráfica
 

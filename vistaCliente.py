@@ -1,7 +1,7 @@
 from tkinter import *
 from tkinter import ttk, messagebox
 from vistaPersona import vistaPersona
-from Guardado_de_datos.AgregarClientes import Aggclientes
+from Guardado_de_datos.AdminClientes import manejarCliente
 
 
 class vistaCliente(vistaPersona):
@@ -50,7 +50,7 @@ class vistaCliente(vistaPersona):
             telefono = self.texBoxTel.get()
 
             # Llamar a la función para agregar un cliente
-            Aggclientes.IngresarClientes(cedula, nombre, telefono)
+            manejarCliente.IngresarClientes(cedula, nombre, telefono)
             messagebox.showinfo("INFORMACIÓN", "Los datos fueron ingresados exitosamente")
 
             # Limpiar los campos de entrada después de guardar
@@ -72,7 +72,7 @@ class vistaCliente(vistaPersona):
             self.tabla.delete(*self.tabla.get_children())
 
             # Obtener los datos de los clientes desde la base de datos
-            datos = Aggclientes.MostrarClientes()
+            datos = manejarCliente.MostrarClientes()
 
             # Insertar cada fila de datos en la tabla
             for row in datos:
@@ -114,7 +114,7 @@ class vistaCliente(vistaPersona):
             telefono = self.texBoxTel.get()
 
             # Llamar a la función para modificar los datos del cliente
-            Aggclientes.ModificarClientes(id, cedula, nombre, telefono)
+            manejarCliente.ModificarClientes(id, cedula, nombre, telefono)
             messagebox.showinfo("INFORMACIÓN", "Los datos fueron modificados exitosamente")
 
             # Limpiar los campos de entrada después de modificar
@@ -137,7 +137,7 @@ class vistaCliente(vistaPersona):
             id = self.texBoxId.get()
 
             # Llamar a la función para eliminar el cliente
-            Aggclientes.EliminarClientes(id)
+            manejarCliente.EliminarClientes(id)
             messagebox.showinfo("INFORMACIÓN", "Los datos fueron eliminados exitosamente")
 
             # Limpiar los campos de entrada después de eliminar

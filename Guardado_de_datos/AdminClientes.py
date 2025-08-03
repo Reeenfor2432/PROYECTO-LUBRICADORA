@@ -1,6 +1,6 @@
 from .Conexion import *  # Importa la conexión a la base de datos desde el módulo Conexion
 
-class Aggclientes:
+class manejarCliente:
     
     # Método para mostrar todos los clientes en la base de datos
     def MostrarClientes():
