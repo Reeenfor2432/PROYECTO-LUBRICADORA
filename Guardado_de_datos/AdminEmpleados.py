@@ -8,7 +8,7 @@ class manejarEmpleado:
             # Crear una conexión con la base de datos
             conec = CConexion.ConexionBaseDeDatos()
             cursor = conec.cursor()  # Crear un cursor para ejecutar consultas
-            cursor.execute("SELECT * FROM empleado;")  # Ejecutar la consulta para seleccionar todos los registros de clientes
+            cursor.execute("SELECT * FROM empleado;")  # Ejecutar la consulta para seleccionar todos los registros de empleados
             resultado = cursor.fetchall()  # Obtener todos los registros resultantes
             conec.commit()  # Confirmar la transacción
             conec.close()  # Cerrar la conexión a la base de datos

@@ -65,17 +65,6 @@ class claseUtilitaria:
         btnIngresar= Button(groupBoxT, text= "Ingresar", width=15)
         return respuesta
     
-    @staticmethod
-    def actualizarVistaTabla(tabla,funcionAgregar):
-        try:
-            tabla.delete(*tabla.get_children())  # limpiar tabla
-
-            datos = funcionAgregar
-            for row in datos:
-                tabla.insert("", "end", values=row)
-
-        except Exception as error:
-            print("Error al actualizar tabla: {}".format(error))
 
     @staticmethod
     def eliminarTabla(tabla):
