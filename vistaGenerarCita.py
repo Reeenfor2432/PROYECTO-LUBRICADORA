@@ -1,13 +1,14 @@
 import tkinter as tk
 from tkinter import *
-from tkinter import ttk
+from tkinter import ttk, messagebox
+from claseUtilitaria import claseUtilitaria
 
 class vistaGenerarCita:
     def generarCita(self,base,callbackMenu):
         groupBoxdatos= LabelFrame(base, text= "Datos de la Cita", padx=10, pady=10)
         groupBoxdatos.pack(pady=50)
 
-        labelId= Label(groupBoxdatos, text= "Identificación de cita (Opcional):", width=35, font=("arial",12))
+        labelId= Label(groupBoxdatos, text= "Identificación de cita (Solo en ELIMINAR):", width=35, font=("arial",12))
         labelId.grid(row=0, column=0)
         textId= Entry(groupBoxdatos)
         textId.grid(row=0,column=1)
@@ -42,9 +43,20 @@ class vistaGenerarCita:
         textEst= Entry(groupBoxdatos)
         textEst.grid(row=6,column=1)
 
+        #Tabla para mostrar las citas
+        self.tabla= claseUtilitaria.tablaParaCita()
+
+        # Vincular el evento de selección de un registro de la tabla
+        self.tabla.bind("<<TreeviewSelect>>", self.seleccionarRegistro)
+
+        # Cargar los datos de la base de datos y actualizarlos en la tabla
+        self.actualizarVistaTabla()
+
         Button(groupBoxdatos, text= "Generar", width=15).grid(row=7, column=0)
         Button(groupBoxdatos, text= "Modificar", width=15).grid(row=7, column=1)
         Button(groupBoxdatos, text= "Eliminar", width=15).grid(row=7, column=2, padx=(40,40))
 
         if callbackMenu:
             regresar= Button(base, text="Volver al menú", command=callbackMenu).pack(pady=10)
+        
+        #Metodos para los botones generar, modificar, eliminar... (Copiar y pegar de otras vistas)
