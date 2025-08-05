@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import *
 from tkinter import ttk, messagebox
+from Guardado_de_datos.Conexion import *
 
 #Métodos utilitarios
 class claseUtilitaria:
@@ -36,14 +37,42 @@ class claseUtilitaria:
         tabla.pack()
         return tabla
     
-
-
     @staticmethod
     def eliminarTabla(tabla):
         if tabla is not None:
             tabla.destroy()
     
     @staticmethod
+    def limpiarGroupbox(groupB):
+        for widget in groupB.winfo_children():
+                widget.destroy()
+    
+    @staticmethod
     def eliminarGroupbox(groupbox):
         if groupbox is not None:
             groupbox.destroy()
+
+    
+    #METODOS PARA SQL
+    @staticmethod
+    def buscarCedulaPorId(id_cliente):
+        try:
+            conec = CConexion.ConexionBaseDeDatos()
+            cursor = conec.cursor()
+
+            sql = "SELECT cedula FROM cliente WHERE id_cliente = %s"
+            cursor.execute(sql, (id_cliente,))
+            resultado = cursor.fetchone()
+
+            cursor.close()
+            conec.close()
+
+            if resultado:
+                return resultado[0]  # regresa cedula
+            else:
+                print("Cliente no encontrado.")
+                return None
+
+        except mysql.connector.Error as error:
+            print("Error al obtener la cédula del cliente:", error)
+            return None
