@@ -36,35 +36,7 @@ class claseUtilitaria:
         tabla.pack()
         return tabla
     
-    @staticmethod
-    def seleccionCita(base):
-        groupBox= LabelFrame(base, text="Selección de la cita facturar", padx=10, pady=10 )
-        groupBox.pack(pady=50)
 
-        labelId= Label(groupBox, text= "Ingrese ID de la cita:", width=35, font=("arial",12))
-        labelId.grid(row=0, column=0)
-        textId= Entry(groupBox)
-        textId.grid(row=0,column=1)
-
-        btnSeleccionar= Button(groupBox, text="Seleccionar", width=25, command=lambda: claseUtilitaria.aplicarDescuento(groupBox,textId))
-        btnSeleccionar.grid(row=1,column=1)
-        return textId
-
-    @staticmethod
-    def aplicarDescuento(groupBoxT, strFrecuente):
-        respuesta= ""
-        #SQL....
-        if int(strFrecuente.get())== 1:
-            Labeldescuento=Label(groupBoxT, text="El cliente es frecuente ¿Desea aplicar descuento?:",width=60)
-            Labeldescuento.pack(pady=10)
-            Textdescuento= Entry(groupBoxT)
-            Textdescuento.pack(pady=10)
-            respuesta= Textdescuento
-        else:
-            respuesta= "Ninguno"  
-        btnIngresar= Button(groupBoxT, text= "Ingresar", width=15)
-        return respuesta
-    
 
     @staticmethod
     def eliminarTabla(tabla):
