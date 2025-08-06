@@ -44,7 +44,7 @@ class vistaGenerarCita:
         textEst.grid(row=6,column=1)
 
         #Tabla para mostrar las citas
-        self.tabla= claseUtilitaria.tablaParaCita()
+        self.tabla= claseUtilitaria.tablaParaCita(base)
 
         # Vincular el evento de selección de un registro de la tabla
         self.tabla.bind("<<TreeviewSelect>>", self.seleccionarRegistro)
