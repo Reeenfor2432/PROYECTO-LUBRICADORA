@@ -2,6 +2,8 @@ import tkinter as tk
 from tkinter import *
 from tkinter import ttk
 
+from db import conn, cursor
+
 class vistaRol:
     def administrarRol(self,base,callback=None):
         groupBox= LabelFrame(base, text="Datos del Rol", padx=10, pady=10 )
