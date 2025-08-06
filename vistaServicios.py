@@ -2,6 +2,8 @@ import tkinter as tk
 from tkinter import *
 from tkinter import ttk
 
+from db import conn, cursor
+
 class vistaServicio:
     def administrarServicio(self,base, callback=None):
         groupBox= LabelFrame(base, text="Datos del Servicio", padx=10, pady=10 )
