@@ -3,6 +3,8 @@ from tkinter import *
 from tkinter import ttk, messagebox
 from claseUtilitaria import claseUtilitaria
 
+from db import conn, cursor
+
 class vistaGenerarCita:
     def generarCita(self,base,callbackMenu):
         groupBoxdatos= LabelFrame(base, text= "Datos de la Cita", padx=10, pady=10)
