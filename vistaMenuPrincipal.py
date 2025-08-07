@@ -17,6 +17,11 @@ class menu:
         self.base = base
         self.mostrarMenu()
 
+    def limpiarPantalla(self):
+        """Elimina todos los widgets hijos del frame base."""
+        for widget in self.base.winfo_children():
+            widget.destroy()
+
     #Metodo para mostrar el menu principal
     def mostrarMenu(self):
         claseUtilitaria.limpiarVentana(self.base)
@@ -65,9 +70,9 @@ class menu:
         vistaempleado.administrarEmpleado(self.base, self.mostrarMenu)
     
     def mostrarServicio(self):
-        claseUtilitaria.limpiarVentana(self.base)
-        vistaservicio= vistaServicio()
-        vistaservicio.administrarServicio(self.base, self.mostrarMenu)
+        self.limpiarPantalla()  # ya existe
+        v = vistaServicio()
+        v.pantallaServicio(self.base, self.mostrarMenu)
     
     def mostrarInventario(self):
         claseUtilitaria.limpiarVentana(self.base)
