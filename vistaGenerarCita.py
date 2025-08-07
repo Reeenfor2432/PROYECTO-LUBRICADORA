@@ -65,13 +65,13 @@ class vistaGenerarCita:
     #Metodos para los botones generar, modificar, eliminar... (Copiar y pegar de otras vistas)
     # ---------- INSERT ----------
     def generarCitaBD(self):
-        sql = """INSERT INTO Cita
-                 (cedula, placa, empleado_id, hora_ingreso, total, descuento)
-                 VALUES (%s,%s,%s,%s,0,0)"""
-        datos = (self.textNom.get(),
-                 self.textP.get(),
-                 self.textEmp.get(),
-                 self.texting.get())
+        sql = """INSERT INTO cita
+         (id_cliente, placa, id_empleado, hora_ingreso, total, descuento)
+         VALUES (%s,%s,%s,%s,0,0)"""
+        datos = (self.textNom.get(),   
+         self.textP.get(),
+         self.textEmp.get(),    
+         self.texting.get())
         cursor.execute(sql, datos)
         conn.commit()
         messagebox.showinfo("OK", "Cita generada.")
@@ -79,7 +79,7 @@ class vistaGenerarCita:
 
     # ---------- UPDATE ----------
     def modificarCitaBD(self):
-        sql = """UPDATE Cita
+        sql = """UPDATE cita
                  SET hora_salida=%s, estado=%s
                  WHERE id_cita=%s"""
         datos = (self.textsal.get() or None,
@@ -92,7 +92,7 @@ class vistaGenerarCita:
 
     # ---------- DELETE ----------
     def eliminarCitaBD(self):
-        cursor.execute("DELETE FROM Cita WHERE id_cita=%s",
+        cursor.execute("DELETE FROM cita WHERE id_cita=%s",
                        (self.textId.get(),))
         conn.commit()
         messagebox.showinfo("OK", "Cita eliminada.")
@@ -100,24 +100,34 @@ class vistaGenerarCita:
 
     # ---------- REFRESCO tabla ----------
     def actualizarVistaTabla(self):
-        cursor.execute("""SELECT id_cita, cedula, placa, empleado_id,
-                                 hora_ingreso, hora_salida, estado
-                          FROM Cita""")
-        filas = cursor.fetchall()
+        cursor.execute("""SELECT id_cita, id_cliente, placa, id_empleado,
+                                    hora_ingreso, hora_salida, estado
+                            FROM cita""")
+        filas = cursor.fetchall()          # ← lista de dicts
         self.tabla.delete(*self.tabla.get_children())
-        for f in filas:
-            self.tabla.insert("", tk.END, values=f)
+
+        for row in filas:
+            valores = (row["id_cita"],
+                        row["id_cliente"],
+                        row["placa"],
+                        row["id_empleado"],
+                        row["hora_ingreso"],
+                        row["hora_salida"],
+                        row["estado"])
+            self.tabla.insert("", tk.END, values=valores)
+
             
     # ---------- SELECT en tabla ----------
     def seleccionarRegistro(self, event):
-        fila = self.tabla.item(self.tabla.focus())["values"]
-        if fila:
-            (cid, ced, pla, emp, hin, hsal, est) = fila
+        valores = self.tabla.item(self.tabla.focus())["values"]
+        if valores:
+            (cid, cli, pla, emp, hin, hsal, est) = valores
             self.textId.delete(0, tk.END);  self.textId.insert(0, cid)
-            self.textNom.delete(0, tk.END); self.textNom.insert(0, ced)
+            self.textNom.delete(0, tk.END); self.textNom.insert(0, cli)
             self.textP.delete(0, tk.END);   self.textP.insert(0, pla)
             self.textEmp.delete(0, tk.END); self.textEmp.insert(0, emp)
             self.texting.delete(0, tk.END); self.texting.insert(0, hin)
             self.textsal.delete(0, tk.END); self.textsal.insert(0, hsal)
             self.textEst.delete(0, tk.END); self.textEst.insert(0, est)
+
 
