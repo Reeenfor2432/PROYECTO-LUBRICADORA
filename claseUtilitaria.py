@@ -61,6 +61,30 @@ class claseUtilitaria:
         tabla.pack(pady=10, fill="x")
         return tabla
 
+    # ------------------------------------------------------------------
+    # Tabla para la vista de Servicios
+    # ------------------------------------------------------------------
+    @staticmethod
+    def tablaParaServicio(base):
+        cols = ("id_servicio", "nombre", "precio")
+
+        tabla = ttk.Treeview(
+            base, columns=cols, show="headings", height=8
+        )
+
+        # Encabezados
+        tabla.heading("id_servicio", text="ID")
+        tabla.heading("nombre",      text="Nombre del servicio")
+        tabla.heading("precio",      text="Precio $")
+
+        # Anchos / alineación
+        tabla.column("id_servicio", width=60,  anchor="center")
+        tabla.column("nombre",      width=220, anchor="w")
+        tabla.column("precio",      width=80,  anchor="e")
+
+        tabla.pack(pady=10, fill="x")
+        return tabla
+
 
     @staticmethod
     def eliminarTabla(tabla):
