@@ -64,6 +64,7 @@ CREATE TABLE producto(
 
 CREATE TABLE cita(
 	id_cita INT AUTO_INCREMENT PRIMARY KEY,
+	cedula char(10),
 	id_cliente INT,
 	placa CHAR(7),
 	id_empleado INT,
