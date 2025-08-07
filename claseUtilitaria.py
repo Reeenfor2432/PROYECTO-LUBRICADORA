@@ -37,6 +37,31 @@ class claseUtilitaria:
         tabla.pack()
         return tabla
     
+    # ------------------------------------------------------------------
+    # Tabla para la vista de Roles
+    # ------------------------------------------------------------------
+    @staticmethod
+    def tablaParaRol(base):
+        """
+        Devuelve un Treeview con las 3 columnas de la tabla rol:
+        id_rol | nombre_rol | descripcion
+        """
+        cols = ("id_rol", "nombre_rol", "descripcion")
+        tabla = ttk.Treeview(base, columns=cols, show="headings", height=8)
+
+        tabla.heading("id_rol",       text="ID")
+        tabla.heading("nombre_rol",  text="Nombre del rol")
+        tabla.heading("descripcion", text="Descripción")
+
+        # Ajusta el ancho a tu gusto
+        tabla.column("id_rol",       width=60,  anchor="center")
+        tabla.column("nombre_rol",   width=150, anchor="w")
+        tabla.column("descripcion",  width=250, anchor="w")
+
+        tabla.pack(pady=10, fill="x")
+        return tabla
+
+
     @staticmethod
     def eliminarTabla(tabla):
         if tabla is not None:
@@ -76,3 +101,5 @@ class claseUtilitaria:
         except mysql.connector.Error as error:
             print("Error al obtener la cédula del cliente:", error)
             return None
+        
+    
