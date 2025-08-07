@@ -45,7 +45,6 @@ class menu:
         btnReportes.pack(pady=10)
         btnFactura= Button(self.base, text="Generar Facturas", width=20, command=self.mostrarFactura)
         btnFactura.pack(pady=10)
-    #Falta....
 
     #Metodo para mostrar la vista cliente (para gerente)
     def mostrarCliente(self):
@@ -82,7 +81,7 @@ class menu:
     def mostrarRol(self):
         claseUtilitaria.limpiarVentana(self.base)
         vistarol= vistaRol()
-        vistarol.pantallaRol(self.base, self.mostrarMenu)
+        vistarol.administrarRol(self.base, self.mostrarMenu)
 
 
     def mostrarReportes(self):
