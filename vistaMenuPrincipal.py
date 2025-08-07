@@ -82,7 +82,8 @@ class menu:
     def mostrarRol(self):
         claseUtilitaria.limpiarVentana(self.base)
         vistarol= vistaRol()
-        vistarol.administrarRol(self.base, self.mostrarMenu)
+        vistarol.pantallaRol(self.base, self.mostrarMenu)
+
 
     def mostrarReportes(self):
         claseUtilitaria.limpiarVentana(self.base)
