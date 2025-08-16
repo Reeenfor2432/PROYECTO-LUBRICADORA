@@ -22,7 +22,7 @@ class claseUtilitaria:
         tabla= ttk.Treeview(groupbox, columns=("id_cita","cedula","placa","id_empleado","hora_ingreso","hora_salida","estado"),show="headings")
         tabla.heading("id_cita", text="Identificacion")
         tabla.column("id_cita",width=100, anchor="w")
-        tabla.heading("cedula", text= "Cedula del cliente")
+        tabla.heading("cedula", text= "Identificación del cliente")
         tabla.column("cedula",width=120, anchor="w")
         tabla.heading("placa", text= "Placa del vehículo")
         tabla.column("placa",width=120, anchor="w")
@@ -42,23 +42,25 @@ class claseUtilitaria:
     # ------------------------------------------------------------------
     @staticmethod
     def tablaParaRol(base):
+        groupbox= LabelFrame(base, text="Lista de Roles", padx=5, pady=5,)
+        groupbox.pack(pady=10)
         """
         Devuelve un Treeview con las 3 columnas de la tabla rol:
         id_rol | nombre_rol | descripcion
         """
         cols = ("id_rol", "nombre_rol", "descripcion")
-        tabla = ttk.Treeview(base, columns=cols, show="headings", height=8)
+        tabla = ttk.Treeview(groupbox, columns=cols, show="headings", height=5)
 
         tabla.heading("id_rol",       text="ID")
         tabla.heading("nombre_rol",  text="Nombre del rol")
         tabla.heading("descripcion", text="Descripción")
 
         # Ajusta el ancho a tu gusto
-        tabla.column("id_rol",       width=60,  anchor="center")
+        tabla.column("id_rol",       width=60,  anchor="w")
         tabla.column("nombre_rol",   width=150, anchor="w")
-        tabla.column("descripcion",  width=250, anchor="w")
+        tabla.column("descripcion",  width=350, anchor="w")
 
-        tabla.pack(pady=10, fill="x")
+        tabla.pack(pady=10)
         return tabla
 
     # ------------------------------------------------------------------
@@ -66,10 +68,12 @@ class claseUtilitaria:
     # ------------------------------------------------------------------
     @staticmethod
     def tablaParaServicio(base):
+        groupbox= LabelFrame(base, text="Lista de Servicios", padx=5, pady=5,)
+        groupbox.pack(pady=10)
         cols = ("id_servicio", "nombre", "precio")
 
         tabla = ttk.Treeview(
-            base, columns=cols, show="headings", height=8
+            groupbox, columns=cols, show="headings", height=5
         )
 
         # Encabezados
@@ -78,11 +82,11 @@ class claseUtilitaria:
         tabla.heading("precio",      text="Precio $")
 
         # Anchos / alineación
-        tabla.column("id_servicio", width=60,  anchor="center")
+        tabla.column("id_servicio", width=60,  anchor="w")
         tabla.column("nombre",      width=220, anchor="w")
-        tabla.column("precio",      width=80,  anchor="e")
+        tabla.column("precio",      width=80,  anchor="w")
 
-        tabla.pack(pady=10, fill="x")
+        tabla.pack(pady=10)
         return tabla
 
 

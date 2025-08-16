@@ -1,84 +1,69 @@
-# vistaServicios.py
 import tkinter as tk
 from tkinter import *
-from tkinter import ttk, messagebox
-from claseUtilitaria import claseUtilitaria
-from db import conn, cursor        # única conexión global
+from tkinter import messagebox
+from Guardado_de_datos.AdminServicios import manejarServicio
+import claseUtilitaria
 
 class vistaServicio:
 
-    # --------------------------- UI principal ---------------------------
     def pantallaServicio(self, base, callbackMenu):
+        self.base = base
+
         group = LabelFrame(base, text="Datos del Servicio", padx=10, pady=10)
         group.pack(pady=20)
 
-        # ------- entradas ----------
-        Label(group, text="ID (Solo en ELIMINAR):").grid(row=0, column=0, sticky="e")
-        self.txtId     = Entry(group, width=8);  self.txtId.grid(row=0, column=1)
+        Label(group, text="ID (Solo en ELIMINAR):", width=25, font=("arial",12)).grid(row=0, column=0)
+        self.txtId = Entry(group); self.txtId.grid(row=0, column=1)
 
-        Label(group, text="Nombre del servicio:").grid(row=1, column=0, sticky="e")
-        self.txtNombre = Entry(group, width=30); self.txtNombre.grid(row=1, column=1)
+        Label(group, text="Nombre:", width=25, font=("arial",12)).grid(row=1, column=0)
+        self.txtNombre = Entry(group); self.txtNombre.grid(row=1, column=1)
 
-        Label(group, text="Precio:").grid(row=2, column=0, sticky="e")
-        self.txtPrecio = Entry(group, width=10); self.txtPrecio.grid(row=2, column=1, sticky="w")
+        Label(group, text="Descripción:", width=25, font=("arial",12)).grid(row=2, column=0)
+        self.txtDesc = Entry(group); self.txtDesc.grid(row=2, column=1)
 
-        # ------- botones CRUD -------
-        btns = Frame(group); btns.grid(row=3, column=0, columnspan=2, pady=5)
-        Button(btns, text="Agregar",  width=12, command=self.add).pack(side=LEFT, padx=4)
-        Button(btns, text="Modificar",width=12, command=self.update).pack(side=LEFT, padx=4)
-        Button(btns, text="Eliminar", width=12, command=self.delete).pack(side=LEFT, padx=4)
+        Label(group, text="Precio:", width=25, font=("arial",12)).grid(row=3, column=0)
+        self.txtPrecio = Entry(group); self.txtPrecio.grid(row=3, column=1)
 
-        # ------- tabla -------
+        # Botones CRUD
+        Button(group, text="Agregar",  width=12, command=self.add).grid(row=4, column=0, pady=5)
+        Button(group, text="Modificar",width=12, command=self.update).grid(row=4, column=1)
+        Button(group, text="Eliminar", width=12, command=self.delete).grid(row=4, column=2)
+
+        # Tabla
         self.tabla = claseUtilitaria.tablaParaServicio(base)
-        self.tabla.bind("<<TreeviewSelect>>", self.cargarFila)
+        self.tabla.bind("<<TreeviewSelect>>", self.cargarRegistro)
         self.refrescar()
 
-        # botón volver
         if callbackMenu:
             Button(base, text="Volver al menú", command=callbackMenu).pack(pady=10)
 
-    # --------------------------- CRUD SQL ---------------------------
+    # CRUD usando AdminServicio
     def add(self):
-        try:
-            sql = "INSERT INTO servicio(nombre, precio) VALUES(%s,%s)"
-            cursor.execute(sql, (self.txtNombre.get(), self.txtPrecio.get()))
-            conn.commit()
-            messagebox.showinfo("OK", "Servicio agregado.")
-            self.refrescar()
-        except Exception as e:
-            messagebox.showerror("Error", str(e))
+        ok, msg = manejarServicio.IngresarServicio(self.txtNombre.get(), self.txtDesc.get(), self.txtPrecio.get())
+        messagebox.showinfo("Resultado", msg)
+        if ok: self.refrescar()
 
     def update(self):
-        try:
-            sql = "UPDATE servicio SET nombre=%s, precio=%s WHERE id_servicio=%s"
-            cursor.execute(sql, (self.txtNombre.get(), self.txtPrecio.get(), self.txtId.get()))
-            conn.commit()
-            messagebox.showinfo("OK", "Servicio modificado.")
-            self.refrescar()
-        except Exception as e:
-            messagebox.showerror("Error", str(e))
+        ok, msg = manejarServicio.ModificarServicio(self.txtId.get(), self.txtNombre.get(), self.txtDesc.get(), self.txtPrecio.get())
+        messagebox.showinfo("Resultado", msg)
+        if ok: self.refrescar()
 
     def delete(self):
-        try:
-            cursor.execute("DELETE FROM servicio WHERE id_servicio=%s", (self.txtId.get(),))
-            conn.commit()
-            messagebox.showinfo("OK", "Servicio eliminado.")
-            self.refrescar()
-        except Exception as e:
-            messagebox.showerror("Error", str(e))
+        ok, msg = manejarServicio.EliminarServicio(self.txtId.get())
+        messagebox.showinfo("Resultado", msg)
+        if ok: self.refrescar()
 
-    # --------------------------- helpers ---------------------------
     def refrescar(self):
-        cursor.execute("SELECT id_servicio, nombre, precio FROM servicio")
-        rows = cursor.fetchall()
+        rows = manejarServicio.MostrarServicios()
         self.tabla.delete(*self.tabla.get_children())
         for r in rows:
-            self.tabla.insert("", tk.END, values=(r["id_servicio"], r["nombre"], r["precio"]))
+            self.tabla.insert("", tk.END, values=(r["id_servicio"], r["nombre"], r["descripcion"], r["precio"]))
 
-    def cargarFila(self, _):
-        fila = self.tabla.item(self.tabla.focus())["values"]
-        if fila:
-            sid, nom, pre = fila
-            self.txtId.delete(0, END);     self.txtId.insert(0, sid)
-            self.txtNombre.delete(0, END); self.txtNombre.insert(0, nom)
-            self.txtPrecio.delete(0, END); self.txtPrecio.insert(0, pre)
+    def cargarRegistro(self, _):
+        vals = self.tabla.item(self.tabla.focus())["values"]
+        if vals:
+            self.txtId.delete(0, END); self.txtId.insert(0, vals[0])
+            self.txtNombre.delete(0, END); self.txtNombre.insert(0, vals[1])
+            self.txtDesc.delete(0, END); self.txtDesc.insert(0, vals[2])
+            self.txtPrecio.delete(0, END); self.txtPrecio.insert(0, vals[3])
+
