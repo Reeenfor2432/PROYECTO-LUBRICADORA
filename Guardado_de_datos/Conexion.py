@@ -21,4 +21,3 @@ class CConexion:
             print("Error al conectarte a la base de datos {}".format(error))
             return conexion  # Retorna la conexión (aunque en caso de error no se ha creado correctamente)
         
-    # Llamada al método para establecer la conexión (en este

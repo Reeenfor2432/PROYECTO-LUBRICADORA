@@ -25,11 +25,8 @@ class manejarEmpleado:
             cursor = conec.cursor()  # Crear un cursor para ejecutar consultas
 
             # SQL para insertar un nuevo empleado
-            sql = "insert into empleado values(null,%s,%s,%s,%s);"
-            valores = (id_rol, nombre, telefono, domicilio)  # Valores a insertar
+            cursor.callproc("sp_insertar_empleado", (id_rol, nombre, telefono, domicilio))
 
-            # Ejecutar la consulta con los valores
-            cursor.execute(sql, valores)
             conec.commit()  # Confirmar la transacción
             print(cursor.rowcount, "Registro ingresado con exito")  # Informar si el registro fue exitoso
             conec.close()  # Cerrar la conexión a la base de datos
@@ -45,11 +42,9 @@ class manejarEmpleado:
             cursor = conec.cursor()  # Crear un cursor para ejecutar consultas
 
             # SQL para actualizar los datos de un empleado
-            sql = "UPDATE empleado SET id_rol=%s,nombre=%s, telefono=%s,domicilio=%s WHERE id_empleado=%s;"
-            valores = (id_rol, nombre, telefono,domicilio, id)  # Valores a actualizar
+            cursor.callproc("sp_actualizar_empleado", (id,id_rol, nombre, telefono, domicilio))
 
             # Ejecutar la consulta con los valores
-            cursor.execute(sql, valores)
             conec.commit()  # Confirmar la transacción
             print(cursor.rowcount, "Registro modificado con exito")  # Informar si el registro fue modificado exitosamente
             conec.close()  # Cerrar la conexión a la base de datos
@@ -65,11 +60,9 @@ class manejarEmpleado:
             cursor = conec.cursor()  # Crear un cursor para ejecutar consultas
 
             # SQL para eliminar un empleado por su ID
-            sql = "DELETE FROM empleado WHERE id_empleado=%s;"
-            valores = (id,)  # Valor del ID del empleado a eliminar
+            cursor.callproc("sp_eliminar_empleado", (id))
 
             # Ejecutar la consulta con el valor
-            cursor.execute(sql, valores)
             conec.commit()  # Confirmar la transacción
             print(cursor.rowcount, "Registro eliminado con exito")  # Informar si el registro fue eliminado exitosamente
             conec.close()  # Cerrar la conexión a la base de datos

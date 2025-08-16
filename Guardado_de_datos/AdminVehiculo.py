@@ -24,11 +24,9 @@ class manejarVehiculo:
             cursor = conec.cursor()  # Crear un cursor para ejecutar consultas
 
             # SQL para insertar un nuevo vehiculo
-            sql = "insert into vehiculo values(%s,%s,%s,%s,%s,%s);"
-            valores = (placa, id_cliente, marca, color, modelo, año)  # Valores a insertar
+            cursor.callproc("sp_insertar_vehiculo", (placa, id_cliente, marca, color, modelo, año))  # Valores a insertar
 
             # Ejecutar la consulta con los valores
-            cursor.execute(sql, valores)
             conec.commit()  # Confirmar la transacción
             print(cursor.rowcount, "Registro ingresado con exito")  # Informar si el registro fue exitoso
             conec.close()  # Cerrar la conexión a la base de datos
@@ -44,11 +42,9 @@ class manejarVehiculo:
             cursor = conec.cursor()  # Crear un cursor para ejecutar consultas
 
             # SQL para actualizar los datos de un empleado
-            sql = "UPDATE vehiculo SET placa=%s,id_cliente=%s, marca=%s,color=%s,modelo=%s,año=%s WHERE placa=%s;"
-            valores = (placa_mod, id_cliente, marca, color, modelo, año, placa_vieja)  # Valores a actualizar
+            cursor.callproc("sp_actualizar_vehiculo", (placa_vieja, placa_mod, id_cliente, marca, color, modelo, año))  # Valores a actualizar
 
             # Ejecutar la consulta con los valores
-            cursor.execute(sql, valores)
             conec.commit()  # Confirmar la transacción
             print(cursor.rowcount, "Registro modificado con exito")  # Informar si el registro fue modificado exitosamente
             conec.close()  # Cerrar la conexión a la base de datos
@@ -64,11 +60,9 @@ class manejarVehiculo:
             cursor = conec.cursor()  # Crear un cursor para ejecutar consultas
 
             # SQL para eliminar un vehiculo por su ID
-            sql = "DELETE FROM vehiculo WHERE placa=%s;"
-            valores = (placa,)  # Valor del ID del vehiculo a eliminar
+            cursor.callproc("sp_actualizar_vehiculo", (placa))  # Valor del ID del vehiculo a eliminar
 
             # Ejecutar la consulta con el valor
-            cursor.execute(sql, valores)
             conec.commit()  # Confirmar la transacción
             print(cursor.rowcount, "Registro eliminado con exito")  # Informar si el registro fue eliminado exitosamente
             conec.close()  # Cerrar la conexión a la base de datos

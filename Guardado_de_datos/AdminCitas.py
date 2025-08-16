@@ -17,7 +17,7 @@ class manejarCita:
             print("Error al intentar mostrar los datos {}".format(error))  # En caso de error, se muestra el mensaje
 
     # Método para insertar bueva cita en la base de datos
-    def IngresarProducto(id_cliente, placa, id_empleado, hora_ingreso,hora_salida, estado):
+    def IngresarCita(id_cliente, placa, id_empleado, hora_ingreso,hora_salida, estado):
         try:
             # Crear una conexión con la base de datos
             conec = CConexion.ConexionBaseDeDatos()
@@ -37,7 +37,7 @@ class manejarCita:
             print("Error al intentar ingresar los datos {}".format(error))  # En caso de error, se muestra el mensaje
 
     # Método para modificar una cita existente en la base de datos
-    def ModificarProducto(id_cita, id_cliente, placa, id_empleado, hora_ingreso,hora_salida, estado):
+    def ModificarCita(id_cita, id_cliente, placa, id_empleado, hora_ingreso,hora_salida, estado):
         try:
             # Crear una conexión con la base de datos
             conec = CConexion.ConexionBaseDeDatos()
@@ -57,7 +57,7 @@ class manejarCita:
             print("Error al intentar modificar los datos {}".format(error))  # En caso de error, se muestra el mensaje
 
     # Método para eliminar una cita de la base de datos
-    def EliminarProducto(id_cita):
+    def EliminarCita(id_cita):
         try:
             # Crear una conexión con la base de datos
             conec = CConexion.ConexionBaseDeDatos()
@@ -76,7 +76,8 @@ class manejarCita:
         except mysql.connector.Error as error:
             print("Error al intentar eliminar los datos {}".format(error))  # En caso de error, se muestra el mensaje
         
-    #No se si usar este método
+    
+
     @staticmethod
     def obtenerId_cliente(cedula):
         # Crear una conexión con la base de datos

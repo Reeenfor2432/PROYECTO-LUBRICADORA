@@ -24,11 +24,9 @@ class manejarProducto:
             cursor = conec.cursor()  # Crear un cursor para ejecutar consultas
 
             # SQL para insertar un nuevo producto
-            sql = "insert into producto values(null,%s,%s,%s,%s,%s,%s);"
-            valores = (nombre_producto, descripcion, precio, stock, id_marca, id_categoria)  # Valores a insertar
+            cursor.callproc("sp_insertar_producto", (nombre_producto, descripcion, precio, stock,id_marca, id_categoria))  # Valores a insertar
 
             # Ejecutar la consulta con los valores
-            cursor.execute(sql, valores)
             conec.commit()  # Confirmar la transacción
             print(cursor.rowcount, "Registro ingresado con exito")  # Informar si el registro fue exitoso
             conec.close()  # Cerrar la conexión a la base de datos
@@ -44,11 +42,9 @@ class manejarProducto:
             cursor = conec.cursor()  # Crear un cursor para ejecutar consultas
 
             # SQL para actualizar los datos de un empleado
-            sql = "UPDATE producto SET nombre_producto=%s, descripcion=%s,precio_unitario=%s,stock=%s,id_marca=%s, id_categoria=%s WHERE id_producto=%s;"
-            valores = (nombre_producto, descripcion, precio, stock, id_marca, id_categoria, id_producto)  # Valores a actualizar
+            cursor.callproc("sp_actualizar_producto", (id_producto,nombre_producto, descripcion, precio, stock,id_marca, id_categoria))
 
             # Ejecutar la consulta con los valores
-            cursor.execute(sql, valores)
             conec.commit()  # Confirmar la transacción
             print(cursor.rowcount, "Registro modificado con exito")  # Informar si el registro fue modificado exitosamente
             conec.close()  # Cerrar la conexión a la base de datos
@@ -64,11 +60,9 @@ class manejarProducto:
             cursor = conec.cursor()  # Crear un cursor para ejecutar consultas
 
             # SQL para eliminar un vehiculo por su ID
-            sql = "DELETE FROM producto WHERE id_producto=%s;"
-            valores = (id_producto,)  # Valor del ID del vehiculo a eliminar
+            cursor.callproc("sp_eliminar_producto", (id_producto))
 
             # Ejecutar la consulta con el valor
-            cursor.execute(sql, valores)
             conec.commit()  # Confirmar la transacción
             print(cursor.rowcount, "Registro eliminado con exito")  # Informar si el registro fue eliminado exitosamente
             conec.close()  # Cerrar la conexión a la base de datos
@@ -115,8 +109,7 @@ class manejarProducto:
             if resultado:
                 id_categoria = resultado[0]  # Devuelve el id
             else:
-                sql_insertar = "INSERT INTO categoria (nombre_categoria) VALUES (%s)"
-                cursor.execute(sql_insertar, (nombre_categoria,))
+                cursor.callproc("sp_insertar_categoria", (nombre_categoria))
                 conec.commit()  # Categoria no encontrada, entonces se añade
                 id_categoria = cursor.lastrowid
             cursor.close()
