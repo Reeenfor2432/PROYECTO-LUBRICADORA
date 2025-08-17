@@ -24,7 +24,7 @@ class vistaCitasCompletas:
             try:
                 conec = CConexion.ConexionBaseDeDatos()
                 cursor = conec.cursor()
-                cursor.execute("SELECT * FROM cita;")
+                cursor.execute("SELECT * FROM citasTodas;")
                 resultado = cursor.fetchall()
                 conec.close()
                 return resultado

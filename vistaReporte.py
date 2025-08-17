@@ -3,7 +3,7 @@ from tkinter import *
 from tkinter import ttk
 from consultas_reportes.vistaReporteCita import vistaReporteCita
 from consultas_reportes.vistaReporteProductosStock import vistaReporteProductosStock
-from consultas_reportes.vistaReporteIngresoPorServ import vistaReporteIngreso
+from consultas_reportes.vistaReporteFactura import vistaReporteFactura
 from claseUtilitaria import claseUtilitaria
 
 class vistaReporte:
@@ -41,6 +41,6 @@ class vistaReporte:
 
     def mostrarVistaReporteIngreso(self):
         claseUtilitaria.eliminarGroupbox(self.groupBoxAnterior)
-        vistaingreso= vistaReporteIngreso()
+        vistaingreso= vistaReporteFactura()
         self.groupBoxAnterior= vistaingreso.interfazReporteIngreso(self.base)
         

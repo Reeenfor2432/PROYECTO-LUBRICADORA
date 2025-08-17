@@ -12,7 +12,7 @@ class vistaFactura:
         self.callbackMenu = callbackMenu
         self.descuento = 1
         self.impuesto = 1
-        self.total = 0  # Se obtiene de una consulta
+        self.total_final = 0
 
         self.seleccionCita()
         Button(self.base, text="Volver al menú", command=self.callbackMenu).pack(pady=30)
@@ -135,18 +135,31 @@ class vistaFactura:
             conec.close()
 
             if resultado and resultado[0] is not None:
-                subtotal = float(resultado[0])
+                self.subtotal = float(resultado[0])
             else:
                 messagebox.showerror("Error", "No hay servicios registrados para esta cita.")
                 return
+            
+            # Consulta detallada de servicios
+            sql_servicios = """
+                SELECT s.nombre, COUNT(ds.id_servicio) AS cantidad,
+                       s.precio, COUNT(ds.id_servicio) * s.precio AS total
+                FROM Detalle_Servicio ds
+                JOIN servicio s ON ds.id_servicio = s.id_servicio
+                WHERE ds.id_cita = %s
+                GROUP BY s.id_servicio, s.nombre, s.precio
+            """
+            cursor.execute(sql_servicios, (self.id_cita,))
+            self.servicios = cursor.fetchall()
 
         except mysql.connector.Error as error:
             print("Error al conectar: {}".format(error))
             return
+        
 
         #Calculos
-        total_con_descuento = subtotal * self.descuento
-        total_final = total_con_descuento * self.impuesto
+        total_con_descuento = self.subtotal * self.descuento
+        self.total_final = total_con_descuento * self.impuesto
 
         # limpiamos y mostramos factura
         claseUtilitaria.limpiarVentana(self.base)
@@ -156,9 +169,44 @@ class vistaFactura:
         self.cedula= claseUtilitaria.buscarCedulaPorId(self.id_cliente)
 
         Label(facturaBox, text=f"Cedula del Cliente: {self.cedula}", font=("arial", 18)).pack()
-        Label(facturaBox, text=f"Subtotal: ${subtotal:.2f}", font=("arial", 14)).pack()
+        Label(facturaBox, text=f"Subtotal: ${self.subtotal:.2f}", font=("arial", 14)).pack()
         Label(facturaBox, text=f"Descuento aplicado: {(1 - self.descuento) * 100:.0f}%", font=("arial", 14)).pack()
         Label(facturaBox, text=f"IVA aplicado: {(self.impuesto - 1) * 100:.0f}%", font=("arial", 14)).pack()
-        Label(facturaBox, text=f"Total a pagar: ${total_final:.2f}", font=("arial", 22, "bold")).pack(pady=10)
+        Label(facturaBox, text=f"Total a pagar: ${self.total_final:.2f}", font=("arial", 22, "bold")).pack(pady=10)
         
         Button(self.base, text="Volver al menú", command=self.callbackMenu).pack(pady=30)
+        
+        #Tabla de servicios
+        tablaBox = LabelFrame(facturaBox, text="Servicios usados", padx=10, pady=10)
+        tablaBox.pack(pady=10)
+
+        tabla = ttk.Treeview(tablaBox, columns=("Servicio", "Cantidad", "Precio", "Total"), show="headings")
+        tabla.heading("Servicio", text="Servicio")
+        tabla.heading("Cantidad", text="Cantidad")
+        tabla.heading("Precio", text="Precio Unitario")
+        tabla.heading("Total", text="Total")
+
+        tabla.column("Servicio", width=150)
+        tabla.column("Cantidad", width=80, anchor="center")
+        tabla.column("Precio", width=120, anchor="e")
+        tabla.column("Total", width=120, anchor="e")
+
+        tabla.pack()
+
+        for serv in self.servicios:
+            tabla.insert("", "end", values=(serv[0], serv[1], f"${serv[2]:.2f}", f"${serv[3]:.2f}"))
+
+        Button(self.base, text="Volver al menú", command=self.callbackMenu).pack(pady=30)
+    
+    def guaradarFactura(self):
+        try:
+            conec = CConexion.ConexionBaseDeDatos()
+            cursor = conec.cursor()
+            cursor.callproc("sp_insertar_factura", (self.id_cita, self.subtotal, self.total_final, self.impuesto, self.descuento))
+            conec.commit()
+            cursor.close()
+            conec.close()
+            messagebox.showinfo("Éxito", "Factura guardada correctamente.")
+        except mysql.connector.Error as error:
+            print("Error al insertar factura: {}".format(error))
+            messagebox.showerror("Error", "No se pudo guardar la factura.")

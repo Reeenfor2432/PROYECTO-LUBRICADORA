@@ -43,7 +43,24 @@ class vistaCita:
         if callbackMenu:
             Button(base, text="Volver al menú", command=callbackMenu).pack(pady=10)
 
-        self.tabla = claseUtilitaria.tablaParaCita(base)
+        #Tabla para cita estándar
+        self.tabla= ttk.Treeview(base, columns=("id_cita","cedula","placa","id_empleado","hora_ingreso","hora_salida","estado"),show="headings")
+        self.tabla.heading("id_cita", text="Identificacion")
+        self.tabla.column("id_cita",width=100, anchor="w")
+        self.tabla.heading("cedula", text= "Identificación del cliente")
+        self.tabla.column("cedula",width=120, anchor="w")
+        self.tabla.heading("placa", text= "Placa del vehículo")
+        self.tabla.column("placa",width=120, anchor="w")
+        self.tabla.heading("id_empleado", text="ID del empleado")
+        self.tabla.column("id_empleado",width=120, anchor="w")
+        self.tabla.heading("hora_ingreso", text= "Hora de ingreso")
+        self.tabla.column("hora_ingreso",width=120, anchor="w")
+        self.tabla.heading("hora_salida", text= "Hora de salida")
+        self.tabla.column("hora_salida",width=120, anchor="w")
+        self.tabla.heading("estado", text= "Estado de la cita")
+        self.tabla.column("estado",width=100, anchor="w")
+        self.tabla.pack()
+
         self.tabla.bind("<<TreeviewSelect>>", self.seleccionarRegistro)
         self.actualizarVistaTabla()
 

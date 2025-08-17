@@ -15,26 +15,52 @@ class claseUtilitaria:
             tabla.delete(fila)
 
     @staticmethod
-    def tablaParaCita(base):
-        groupbox= LabelFrame(base, text="Lista de Citas", padx=5, pady=5,)
+    def tablaParaCitaDetallada(base):
+        groupbox = LabelFrame(base, text="Lista de Citas - Clientes Frecuentes", padx=5, pady=5)
         groupbox.pack(pady=10)
 
-        tabla= ttk.Treeview(groupbox, columns=("id_cita","cedula","placa","id_empleado","hora_ingreso","hora_salida","estado"),show="headings")
-        tabla.heading("id_cita", text="Identificacion")
-        tabla.column("id_cita",width=100, anchor="w")
-        tabla.heading("cedula", text= "Identificación del cliente")
-        tabla.column("cedula",width=120, anchor="w")
-        tabla.heading("placa", text= "Placa del vehículo")
-        tabla.column("placa",width=120, anchor="w")
-        tabla.heading("id_empleado", text="ID del empleado")
-        tabla.column("id_empleado",width=120, anchor="w")
-        tabla.heading("hora_ingreso", text= "Hora de ingreso")
-        tabla.column("hora_ingreso",width=120, anchor="w")
-        tabla.heading("hora_salida", text= "Hora de salida")
-        tabla.column("hora_salida",width=120, anchor="w")
-        tabla.heading("estado", text= "Estado de la cita")
-        tabla.column("estado",width=100, anchor="w")
-        tabla.pack()
+        # TreeView con las columnas de la vista
+        tabla = ttk.Treeview(
+        groupbox,
+        columns=(
+            "id_cita", "id_cliente", "nombre_cliente", "cedula",
+            "placa", "marca", "modelo",
+            "id_empleado", "nombre_empleado", "telefono_empleado",
+            "hora_ingreso", "hora_salida", "estado"),show="headings")
+
+        # Encabezados y configuración de columnas
+        tabla.heading("id_cita", text="ID Cita")
+        tabla.column("id_cita", width=80, anchor="w")
+
+        tabla.heading("id_cliente", text="ID Cliente")
+        tabla.column("id_cliente", width=80, anchor="w")
+
+        tabla.heading("nombre_cliente", text="Nombre Cliente")
+        tabla.column("nombre_cliente", width=150, anchor="w")
+
+        tabla.heading("cedula", text="Cédula")
+        tabla.column("cedula", width=100, anchor="w")
+
+        tabla.heading("placa", text="Placa Vehículo")
+        tabla.column("placa", width=100, anchor="w")
+
+
+        tabla.heading("id_empleado", text="ID Empleado")
+        tabla.column("id_empleado", width=100, anchor="w")
+
+        tabla.heading("nombre_empleado", text="Empleado")
+        tabla.column("nombre_empleado", width=150, anchor="w")
+
+        tabla.heading("hora_ingreso", text="Hora Ingreso")
+        tabla.column("hora_ingreso", width=120, anchor="w")
+
+        tabla.heading("hora_salida", text="Hora Salida")
+        tabla.column("hora_salida", width=120, anchor="w")
+
+        tabla.heading("estado", text="Estado Cita")
+        tabla.column("estado", width=80, anchor="w")
+
+        tabla.pack(pady=10)
         return tabla
     
     # ------------------------------------------------------------------

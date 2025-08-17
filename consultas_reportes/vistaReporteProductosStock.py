@@ -9,7 +9,7 @@ class vistaReporteProductosStock:
         groupBox= LabelFrame(base,text="Lista de Productos", padx=5,pady=5,)
         groupBox.pack(pady=10)
         #Crecion de TreeView (widget que permite mostrar tablas)
-        self.tabla= ttk.Treeview(groupBox,columns=("id_producto","nombre_producto","descripcion", "precio_unitario", "stock", "id_marca", "id_categoria"), show="headings", height=5,)
+        self.tabla= ttk.Treeview(groupBox,columns=("id_producto","nombre_producto","descripcion", "precio_unitario", "stock", "nombre_marca", "nombre_categoria"), show="headings", height=5,)
         self.tabla.heading("id_producto", text="Identificacion")
         self.tabla.column("id_producto",width=100, anchor="w")
         self.tabla.heading("nombre_producto", text= "Nombre del producto")
@@ -20,10 +20,10 @@ class vistaReporteProductosStock:
         self.tabla.column("precio_unitario",width=90, anchor="w")
         self.tabla.heading("stock", text= "Stock actual")
         self.tabla.column("stock",width=90, anchor="w")
-        self.tabla.heading("id_marca", text= "ID Marca")
-        self.tabla.column("id_marca",width=90, anchor="w")
-        self.tabla.heading("id_categoria", text= "ID Categoría")
-        self.tabla.column("id_categoria",width=90, anchor="w")
+        self.tabla.heading("nombre_marca", text= "Marca")
+        self.tabla.column("nombre_marca",width=90, anchor="w")
+        self.tabla.heading("nombre_categoria", text= "Categoría")
+        self.tabla.column("nombre_categoria",width=90, anchor="w")
         self.tabla.pack(pady=10)
         self.actualizarVistaTabla()
         return groupBox
@@ -43,7 +43,7 @@ class vistaReporteProductosStock:
         try:
             conec = CConexion.ConexionBaseDeDatos()
             cursor = conec.cursor()
-            cursor.execute("SELECT id_producto,nombre_producto,descripcion, precio_unitario, stock, id_marca, id_categoria FROM producto WHERE stock < 5")
+            cursor.execute("SELECT * FROM productosStockMenorCinco") #Llama a la view para el reporte
             resultado = cursor.fetchall()
             conec.close()
             return resultado

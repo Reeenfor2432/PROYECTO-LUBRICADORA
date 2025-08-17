@@ -23,8 +23,8 @@ class vistaReporteCita:
         btnCitasPendientes= Button(groupbox, text="Mostrar las citas pendientes", width=50, command=self.mostrarCitasPendientes)
         btnCitasPendientes.grid(row=2,column=0)
 
-        #Tabla de citas
-        self.tabla= claseUtilitaria.tablaParaCita(base)
+        #Tabla de citas detalladas
+        self.tabla= claseUtilitaria.tablaParaCitaDetallada(base)
 
         if callbackReporte:
             Button(base,text="Volver a Reportes", command=lambda:callbackReporte(base)).pack(pady=10)

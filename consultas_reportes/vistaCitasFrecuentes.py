@@ -24,7 +24,7 @@ class vistaCitasFrecuentes:
             try:
                 conec = CConexion.ConexionBaseDeDatos()
                 cursor = conec.cursor()
-                cursor.execute("SELECT c.id_cita, c.id_cliente, c.placa, c.id_empleado, c.hora_ingreso, c.hora_salida, c.estado FROM cita c JOIN cliente cl ON c.id_cliente = cl.id_cliente WHERE c.id_cliente IN (SELECT id_cliente FROM cita GROUP BY id_cliente HAVING COUNT(*) > 5);")
+                cursor.execute("SELECT * citasClientesFrecuentes")
                 resultado = cursor.fetchall()
                 conec.close()
                 return resultado

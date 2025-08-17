@@ -2,7 +2,7 @@ USE LUBRICONTROL;
 
 /* CLIENTE INSERTAR, MODIFICAR, ELIMINAR*/
 DELIMITER $$
-create procedure sp_insertar_cliente(in p_cedula char(10), p_nombre varchar(60), p_telefono varchar(15) )
+CREATE PROCEDURE sp_insertar_cliente(in p_cedula char(10), p_nombre varchar(60), p_telefono varchar(15) )
 BEGIN
     DECLARE EXIT HANDLER FOR SQLEXCEPTION
     BEGIN
@@ -610,5 +610,33 @@ BEGIN
     DELETE FROM cita WHERE id_cita = p_id;
 
     COMMIT;
-END$$DELIMITER ;
+END
+$$DELIMITER ;
+
+/* FACTURA INSERTAR (NO MODIFICABLE NI ELIMINABLE) */
+DELIMITER $$
+
+CREATE PROCEDURE sp_insertar_factura(IN p_cita INT,IN p_subtotal DECIMAL(10,2),IN p_total DECIMAL(10,2),IN p_impuesto DECIMAL(5,2),IN p_descuento DECIMAL(5,2))
+BEGIN
+    -- Manejador de errores generales
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        ROLLBACK;
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error al insertar la factura';
+    END;
+
+    -- Verificamos si la cita existe
+    IF (SELECT COUNT(*) FROM cita WHERE id_cita = p_cita) = 0 THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'La cita indicada no existe, no se puede generar factura';
+    END IF;
+
+    START TRANSACTION;
+
+    INSERT INTO factura (cita, subtotal, total, impuesto, descuento)
+    VALUES (p_cita, p_subtotal, p_total, p_impuesto, p_descuento);
+
+    COMMIT;
+END 
+$$DELIMITER ;
+
 

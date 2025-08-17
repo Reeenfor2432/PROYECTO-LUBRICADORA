@@ -78,7 +78,7 @@ CREATE TABLE cita(
 CREATE TABLE factura(
 	id_factura INT AUTO_INCREMENT PRIMARY KEY,
 	cita INT,
-	numero_factura VARCHAR(60),
+	/*numero_factura VARCHAR(60),*/
 	subtotal DECIMAL(10,2),
 	total DECIMAL(10,2),
 	impuesto DECIMAL(5,2),
