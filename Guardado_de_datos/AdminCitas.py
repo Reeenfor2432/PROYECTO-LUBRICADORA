@@ -24,12 +24,8 @@ class manejarCita:
             cursor = conec.cursor()  # Crear un cursor para ejecutar consultas
 
             # SQL para insertar nueva cita
-            sql = "insert into cita values(null,%s,%s,%s,%s,%s,%s);"
-            valores = (id_cliente, placa, id_empleado, hora_ingreso,hora_salida, estado)  # Valores a insertar
-
-            # Ejecutar la consulta con los valores
-            cursor.execute(sql, valores)
-            conec.commit()  # Confirmar la transacción
+            cursor.callproc("sp_insertar_cita", (id_cliente, placa, id_empleado, hora_ingreso,hora_salida, estado))
+            conec.commit()  # Valores a insertar
             print(cursor.rowcount, "Registro ingresado con exito")  # Informar si el registro fue exitoso
             conec.close()  # Cerrar la conexión a la base de datos
 
@@ -44,12 +40,8 @@ class manejarCita:
             cursor = conec.cursor()  # Crear un cursor para ejecutar consultas
 
             # SQL para actualizar los datos de un empleado
-            sql = "UPDATE cita SET id_cliente=%s, placa=%s,id_empleado=%s,hora_ingreso=%s,hora_salida=%s, estado=%s WHERE id_cita=%s;"
-            valores = (id_cliente, placa, id_empleado, hora_ingreso,hora_salida, estado, id_cita)  # Valores a actualizar
-
-            # Ejecutar la consulta con los valores
-            cursor.execute(sql, valores)
-            conec.commit()  # Confirmar la transacción
+            cursor.callproc("sp_actualizar_cita", (id_cita, id_cliente, placa, id_empleado, hora_ingreso,hora_salida, estado))
+            conec.commit()  # Valores a insertar 
             print(cursor.rowcount, "Registro modificado con exito")  # Informar si el registro fue modificado exitosamente
             conec.close()  # Cerrar la conexión a la base de datos
 
@@ -64,12 +56,8 @@ class manejarCita:
             cursor = conec.cursor()  # Crear un cursor para ejecutar consultas
 
             # SQL para eliminar un vehiculo por su ID
-            sql = "DELETE FROM cita WHERE id_cita=%s;"
-            valores = (id_cita,)  # Valor del ID del vehiculo a eliminar
-
-            # Ejecutar la consulta con el valor
-            cursor.execute(sql, valores)
-            conec.commit()  # Confirmar la transacción
+            cursor.callproc("sp_actualizar_cita", (id_cita))
+            conec.commit()  # Valores a insertar 
             print(cursor.rowcount, "Registro eliminado con exito")  # Informar si el registro fue eliminado exitosamente
             conec.close()  # Cerrar la conexión a la base de datos
 

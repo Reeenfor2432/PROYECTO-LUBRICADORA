@@ -17,12 +17,12 @@ class vistaReporte:
         groupbox= LabelFrame(base, text="Reportes", padx=10, pady=10)
         groupbox.pack(pady=10)
 
-        #Botones para reportes (faltan command)
+        #Botones para reportes
         btnCitas= Button(groupbox, text="Mostrar reportes de citas", width=70, command= self.mostrarVistaReporteCita)
         btnCitas.grid(row=0,column=0)
         btnStock=Button(groupbox, text="Mostrar los productos con stock menor a 5", width=70, command=self.mostrarVistaReporteStock)
         btnStock.grid(row=1,column=0)
-        btnIngreso= Button(groupbox, text="Mostrar el ingreso total por servicio", width=70, command=self.mostrarVistaReporteIngreso)
+        btnIngreso= Button(groupbox, text="Mostrar reporte de facturas", width=70, command=self.mostrarVistaReporteFactura)
         btnIngreso.grid(row=2,column=0)
 
         if callbackMenu:
@@ -39,8 +39,8 @@ class vistaReporte:
         vistaprod= vistaReporteProductosStock()
         self.groupBoxAnterior= vistaprod.interfazReporteStock(self.base)
 
-    def mostrarVistaReporteIngreso(self):
+    def mostrarVistaReporteFactura(self):
         claseUtilitaria.eliminarGroupbox(self.groupBoxAnterior)
         vistaingreso= vistaReporteFactura()
-        self.groupBoxAnterior= vistaingreso.interfazReporteIngreso(self.base)
+        self.groupBoxAnterior= vistaingreso.interfazReporteFactura(self.base)
         
