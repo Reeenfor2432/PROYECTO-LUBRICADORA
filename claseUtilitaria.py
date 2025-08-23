@@ -95,7 +95,7 @@ class claseUtilitaria:
     def tablaParaServicio(base):
         groupbox= LabelFrame(base, text="Lista de Servicios", padx=5, pady=5,)
         groupbox.pack(pady=10)
-        cols = ("id_servicio", "nombre", "precio")
+        cols = ("id_servicio", "nombre", "descripcion", "precio")
 
         tabla = ttk.Treeview(
             groupbox, columns=cols, show="headings", height=5
@@ -104,11 +104,13 @@ class claseUtilitaria:
         # Encabezados
         tabla.heading("id_servicio", text="ID")
         tabla.heading("nombre",      text="Nombre del servicio")
+        tabla.heading("descripcion", text= "Descripcion")
         tabla.heading("precio",      text="Precio $")
 
         # Anchos / alineación
         tabla.column("id_servicio", width=60,  anchor="w")
         tabla.column("nombre",      width=220, anchor="w")
+        tabla.column("descripcion", width= 350, anchor= "w")
         tabla.column("precio",      width=80,  anchor="w")
 
         tabla.pack(pady=10)

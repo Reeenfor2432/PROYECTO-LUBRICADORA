@@ -109,7 +109,7 @@ class manejarProducto:
             if resultado:
                 id_categoria = resultado[0]  # Devuelve el id
             else:
-                cursor.callproc("sp_insertar_categoria", (nombre_categoria))
+                cursor.callproc("sp_insertar_categoria", (nombre_categoria,))
                 conec.commit()  # Categoria no encontrada, entonces se añade
                 id_categoria = cursor.lastrowid
             cursor.close()

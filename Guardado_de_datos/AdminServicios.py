@@ -6,7 +6,7 @@ class manejarServicio:
     def MostrarServicios():
         try:
             conec = CConexion.ConexionBaseDeDatos()
-            cursor = conec.cursor()
+            cursor = conec.cursor(dictionary=True)
             cursor.execute("SELECT * FROM servicio;")
             resultado = cursor.fetchall()
             conec.commit(); conec.close()
@@ -20,7 +20,7 @@ class manejarServicio:
             cursor = conec.cursor()
             cursor.callproc("sp_insertar_servicio", (nombre, descripcion, precio))
             conec.commit(); conec.close()
-            print("Servicio ingresado con éxito")
+            return True, "Servicio agregado correctamente"
         except mysql.connector.Error as error:
             print("Error al insertar servicio: {}".format(error))
 
@@ -30,7 +30,7 @@ class manejarServicio:
             cursor = conec.cursor()
             cursor.callproc("sp_actualizar_servicio", (int(id), nombre, descripcion, precio))
             conec.commit(); conec.close()
-            print("Servicio actualizado con éxito")
+            return True, "Servicio modificado correctamente"
         except mysql.connector.Error as error:
             print("Error al actualizar servicio: {}".format(error))
 
@@ -40,6 +40,6 @@ class manejarServicio:
             cursor = conec.cursor()
             cursor.callproc("sp_eliminar_servicio", (int(id),))
             conec.commit(); conec.close()
-            print("Servicio eliminado con éxito")
+            return True, "Servicio eliminado correctamente"
         except mysql.connector.Error as error:
             print("Error al eliminar servicio: {}".format(error))

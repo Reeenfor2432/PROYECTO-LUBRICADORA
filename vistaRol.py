@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import *
 from tkinter import messagebox
 from Guardado_de_datos.AdminRoles import manejarRol
-import claseUtilitaria
+from claseUtilitaria import claseUtilitaria
 
 class vistaRol:
 
