@@ -91,7 +91,7 @@ END
 $$DELIMITER 
 
 DELIMITER $$
-CREATE PROCEDURE sp_actualizar_empleado(empleado INT, rol INT nom varchar(60), tel varchar(15), dom varchar(100))
+CREATE PROCEDURE sp_actualizar_empleado(empleado INT, rol INT, nom varchar(60), tel varchar(15), dom varchar(100))
 BEGIN
     DECLARE EXIT HANDLER FOR SQLEXCEPTION
     BEGIN
