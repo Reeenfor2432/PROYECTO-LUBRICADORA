@@ -65,7 +65,7 @@ BEGIN
 
     COMMIT;
 END
-$$DELIMITER ;
+$$ DELIMITER ;
 
 /** EMPLEADO INSERTAR, MODIFICAR, ELIMINAR**/
 DELIMITER $$
@@ -110,8 +110,8 @@ BEGIN
     WHERE id_empleado = empleado;
 
     COMMIT;
-END$$
-DELIMITER ;
+END
+$$ DELIMITER ;
 
 DELIMITER $$
 CREATE PROCEDURE sp_eliminar_empleado(IN p_id INT)
@@ -158,7 +158,7 @@ END$$
 DELIMITER ;
 
 DELIMITER $$
-CREATE PROCEDURE sp_actualizar_vehiculo(IN p_placa_old, IN p_placa CHAR(7),IN p_id_cliente INT,IN p_marca VARCHAR(20),IN p_color VARCHAR(20),IN p_modelo VARCHAR(40),IN p_anio YEAR)
+CREATE PROCEDURE sp_actualizar_vehiculo(IN p_placa_old CHAR(7), IN p_placa CHAR(7),IN p_id_cliente INT,IN p_marca VARCHAR(20),IN p_color VARCHAR(20),IN p_modelo VARCHAR(40),IN p_anio YEAR)
 BEGIN
     DECLARE EXIT HANDLER FOR SQLEXCEPTION
     BEGIN
@@ -333,7 +333,7 @@ BEGIN
 
     COMMIT;
 END
-$$DELIMITER ;
+$$ DELIMITER ;
 
 
 /** MARCA MODIFICAR, INSERTAR, ELIMINAR**/
@@ -540,7 +540,7 @@ $$DELIMITER ;
 
 /** CITA MODIFICAR, INSERTAR, ELIMINAR**/
 DELIMITER $$
-CREATE PROCEDURE sp_insertar_cita(IN p_id_cliente INT,IN p_placa CHAR(7),IN p_id_empleado INT,IN p_hora_ingreso DATETIME,IN p_hora_salida DATETIME,IN p_estado ENUM('pendiente','en_proceso','finalizado','cancelado'))
+CREATE PROCEDURE sp_insertar_cita(IN p_id_cliente INT,IN p_placa CHAR(7),IN p_id_empleado INT,IN p_hora_ingreso DATETIME,IN p_hora_salida DATETIME,IN p_estado ENUM('pendiente','en_proceso','finalizado','cancelado'), OUT cita_generada INT)
 BEGIN
     DECLARE EXIT HANDLER FOR SQLEXCEPTION
     BEGIN
@@ -565,17 +565,19 @@ BEGIN
     INSERT INTO cita (id_cliente, placa, id_empleado, hora_ingreso, hora_salida, estado)
     VALUES (p_id_cliente, p_placa, p_id_empleado, p_hora_ingreso, p_hora_salida, p_estado);
 
+    SET cita_generada = LAST_INSERT_ID();
+
     COMMIT;
 END
 $$DELIMITER ;
 
 DELIMITER $$
-CREATE PROCEDURE sp_actualizar_cita(IN p_id INT,IN p_hora_salida DATETIME,IN p_estado ENUM('pendiente','en_proceso','finalizado','cancelado'))
+CREATE PROCEDURE sp_actualizar_cita(IN p_id INT,IN p_id_cliente INT,IN p_placa CHAR(7),IN p_id_empleado INT,IN p_hora_ingreso DATETIME,IN p_hora_salida DATETIME,IN p_estado ENUM('pendiente','en_proceso','finalizado','cancelado'))
 BEGIN
     DECLARE EXIT HANDLER FOR SQLEXCEPTION
     BEGIN
         ROLLBACK;
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error actualizando cita';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error insertando cita';
     END;
 
     START TRANSACTION;
@@ -584,8 +586,25 @@ BEGIN
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Cita no encontrada';
     END IF;
 
+    IF NOT EXISTS (SELECT 1 FROM cliente WHERE id_cliente = p_id_cliente) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Cliente no existe';
+    END IF;
+
+    IF NOT EXISTS (SELECT 1 FROM vehiculo WHERE placa = p_placa) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Vehiculo no existe';
+    END IF;
+
+    IF NOT EXISTS (SELECT 1 FROM empleado WHERE id_empleado = p_id_empleado) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Empleado no existe';
+    END IF;
+
     UPDATE cita
-    SET hora_salida = p_hora_salida, estado = p_estado
+    SET id_cliente = p_id_cliente,
+        placa = p_placa,
+        id_empleado = p_id_empleado,
+        hora_ingreso = p_hora_ingreso,
+        hora_salida = p_hora_salida,
+        estado = p_estado
     WHERE id_cita = p_id;
 
     COMMIT;
@@ -636,7 +655,8 @@ BEGIN
 
     COMMIT;
 END 
-$$DELIMITER ;
+$$ DELIMITER ;
+
 
 
 

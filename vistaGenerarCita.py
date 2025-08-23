@@ -3,6 +3,7 @@ from tkinter import *
 from tkinter import messagebox, ttk
 import tkinter as tk
 from claseUtilitaria import claseUtilitaria
+from Guardado_de_datos.Conexion import *
 from Guardado_de_datos.db import conn, cursor
 
 class vistaCita:
@@ -44,7 +45,9 @@ class vistaCita:
             Button(base, text="Volver al menú", command=callbackMenu).pack(pady=10)
 
         #Tabla para cita estándar
-        self.tabla= ttk.Treeview(base, columns=("id_cita","cedula","placa","id_empleado","hora_ingreso","hora_salida","estado"),show="headings")
+        groupBoxTabla = LabelFrame(base, text="Lista de Citas", padx=10, pady=10)
+        groupBoxTabla.pack(pady=20)
+        self.tabla= ttk.Treeview(groupBoxTabla, columns=("id_cita","cedula","placa","id_empleado","hora_ingreso","hora_salida","estado"),show="headings")
         self.tabla.heading("id_cita", text="Identificacion")
         self.tabla.column("id_cita",width=100, anchor="w")
         self.tabla.heading("cedula", text= "Identificación del cliente")
@@ -67,8 +70,8 @@ class vistaCita:
     def guardar(self):
         id_cita = manejarCita.IngresarCita(
             self.textNom.get(), self.textP.get(), self.textEmp.get(),
-            self.texting.get(), self.textsal.get(), self.textEst.get()
-        )
+            self.texting.get(), self.textsal.get(), self.textEst.get())
+        
         if id_cita:
             self.id_cita_generada = id_cita
             messagebox.showinfo("OK", "Cita generada.")
@@ -77,19 +80,21 @@ class vistaCita:
             self.asignarProducto()
 
     def modificar(self):
-        manejarCita.ModificarCita(self.textId.get(), self.textsal.get(), self.textEst.get())
+        manejarCita.ModificarCita(self.textId.get(),self.textNom.get(), self.textP.get(), self.textEmp.get(),
+            self.texting.get(), self.textsal.get(), self.textEst.get())
         messagebox.showinfo("OK", "Cita modificada.")
         self.actualizarVistaTabla()
 
     def eliminar(self):
+        self.eliminarProductoUsado()
         manejarCita.EliminarCita(self.textId.get())
         messagebox.showinfo("OK", "Cita eliminada.")
         self.actualizarVistaTabla()
-        self.eliminarProductoUsado()
+        
 
     def actualizarVistaTabla(self):
         self.tabla.delete(*self.tabla.get_children())
-        for row in manejarCita.MostrarCitas():
+        for row in manejarCita.MostrarCita():
             self.tabla.insert("", "end", values=(row["id_cita"], row["id_cliente"], row["placa"], 
                                                  row["id_empleado"], row["hora_ingreso"], row["hora_salida"], row["estado"]))
 
@@ -120,21 +125,26 @@ class vistaCita:
         Button(groupBoxProd, text="Añadir", width=15, command=self.insertarProductoUsado).grid(row=7, column=0) 
         
     def insertarProductoUsado(self): 
-        sql = """INSERT INTO producto_usado (id_cita, id_producto, cantidad) VALUES (%s,%s,%s)""" 
-        datos = (self.id_cita_generada, self.textProd.get(), self.textPCant.get()) 
-        cursor.execute(sql, datos) 
-        conn.commit() 
-        messagebox.showinfo("Se han asignado los productos a la cita") 
-        claseUtilitaria.limpiarVentana(self.base) 
-        self.generarCita(self.base, self.callbackMenu)
+        try:
+            sql = """INSERT INTO producto_usado (id_cita, id_producto, cantidad) VALUES (%s,%s,%s)""" 
+            datos = (self.id_cita_generada, self.textProd.get(), self.textPCant.get()) 
+            cursor.execute(sql, datos) 
+            conn.commit() 
+            messagebox.showinfo("OK","Se han asignado los productos a la cita") 
+            claseUtilitaria.limpiarVentana(self.base) 
+            self.generarCita(self.base, self.callbackMenu)
+        except mysql.connector.Error as error:
+            print("Error al intentar asignar los productos {}".format(error))
     
     def eliminarProductoUsado(self): 
-        sql = """DELETE FROM producto_usado WHERE id_cita = %s""" 
-        datos = (self.id_cita_generada) 
-        cursor.execute(sql, datos) 
-        conn.commit()  
-        claseUtilitaria.limpiarVentana(self.base)
-
+        try:
+            sql = """DELETE FROM producto_usado WHERE id_cita = %s""" 
+            datos = (self.textId.get(),) 
+            cursor.execute(sql, datos) 
+            conn.commit()
+            print("Se han retirado los productos de la cita") 
+        except mysql.connector.Error as error:
+            print("Error al intentar remover los productos {}".format(error))
 
 
 

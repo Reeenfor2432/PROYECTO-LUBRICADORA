@@ -6,7 +6,7 @@ from vistaServicios import vistaServicio
 from vistaInventario import vistaInventario
 from vistaRol import vistaRol
 from vistaReporte import vistaReporte
-from vistaGenerarCita import vistaGenerarCita
+from vistaGenerarCita import vistaCita
 from vistaVehiculos import vistaVehiculo
 from claseUtilitaria import claseUtilitaria
 from vistaFactura import vistaFactura
@@ -80,7 +80,7 @@ class menu:
     
     def mostrarGenerarCita(self):
         claseUtilitaria.limpiarVentana(self.base)
-        vistacit= vistaGenerarCita()
+        vistacit= vistaCita()
         vistacit.generarCita(self.base, self.mostrarMenu)
     
     def mostrarRol(self):

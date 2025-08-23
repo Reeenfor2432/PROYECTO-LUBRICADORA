@@ -1,5 +1,5 @@
 import mysql.connector
-from Conexion import CConexion
+from Guardado_de_datos.Conexion import CConexion
 
 class manejarRol:
 
@@ -28,7 +28,7 @@ class manejarRol:
         try:
             conec = CConexion.ConexionBaseDeDatos()
             cursor = conec.cursor()
-            cursor.callproc("sp_actualizar_rol", (id, nombre, descripcion))
+            cursor.callproc("sp_actualizar_rol", (int(id), nombre, descripcion))
             conec.commit(); conec.close()
             print("Rol actualizado con éxito")
         except mysql.connector.Error as error:
@@ -38,7 +38,7 @@ class manejarRol:
         try:
             conec = CConexion.ConexionBaseDeDatos()
             cursor = conec.cursor()
-            cursor.callproc("sp_eliminar_rol", (id,))
+            cursor.callproc("sp_eliminar_rol", (int(id),))
             conec.commit(); conec.close()
             print("Rol eliminado con éxito")
         except mysql.connector.Error as error:

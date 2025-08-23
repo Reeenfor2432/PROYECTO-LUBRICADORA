@@ -39,7 +39,7 @@ class manejarCliente:
             conec = CConexion.ConexionBaseDeDatos()
             cursor = conec.cursor()
             # SP que realiza el SQL con procedure
-            cursor.callproc("sp_actualizar_cliente", (id, cedula, nombre, telefono))
+            cursor.callproc("sp_actualizar_cliente", (int(id), cedula, nombre, telefono))
             conec.commit()
             print("Registro actualizado con éxtio")
             conec.close()
@@ -53,7 +53,7 @@ class manejarCliente:
             conec = CConexion.ConexionBaseDeDatos()
             cursor = conec.cursor()
             # SP que realiza el SQL con procedure
-            cursor.callproc("sp_eliminar_cliente", (id))
+            cursor.callproc("sp_eliminar_cliente", (int(id),))
             conec.commit()
             print("Registro eliminado con éxtio")
             conec.close()

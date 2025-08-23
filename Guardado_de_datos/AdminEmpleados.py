@@ -42,7 +42,7 @@ class manejarEmpleado:
             cursor = conec.cursor()  # Crear un cursor para ejecutar consultas
 
             # SQL para actualizar los datos de un empleado
-            cursor.callproc("sp_actualizar_empleado", (id,id_rol, nombre, telefono, domicilio))
+            cursor.callproc("sp_actualizar_empleado", (int(id),int(id_rol), nombre, telefono, domicilio))
 
             # Ejecutar la consulta con los valores
             conec.commit()  # Confirmar la transacción
@@ -60,7 +60,7 @@ class manejarEmpleado:
             cursor = conec.cursor()  # Crear un cursor para ejecutar consultas
 
             # SQL para eliminar un empleado por su ID
-            cursor.callproc("sp_eliminar_empleado", (id))
+            cursor.callproc("sp_eliminar_empleado", (int(id),))
 
             # Ejecutar la consulta con el valor
             conec.commit()  # Confirmar la transacción

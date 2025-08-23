@@ -16,7 +16,7 @@ class claseUtilitaria:
 
     @staticmethod
     def tablaParaCitaDetallada(base):
-        groupbox = LabelFrame(base, text="Lista de Citas - Clientes Frecuentes", padx=5, pady=5)
+        groupbox = LabelFrame(base, text="Lista de Citas", padx=5, pady=5)
         groupbox.pack(pady=10)
 
         # TreeView con las columnas de la vista
@@ -24,8 +24,7 @@ class claseUtilitaria:
         groupbox,
         columns=(
             "id_cita", "id_cliente", "nombre_cliente", "cedula",
-            "placa", "marca", "modelo",
-            "id_empleado", "nombre_empleado", "telefono_empleado",
+            "placa", "id_empleado", "nombre_empleado",
             "hora_ingreso", "hora_salida", "estado"),show="headings")
 
         # Encabezados y configuración de columnas
@@ -36,7 +35,7 @@ class claseUtilitaria:
         tabla.column("id_cliente", width=80, anchor="w")
 
         tabla.heading("nombre_cliente", text="Nombre Cliente")
-        tabla.column("nombre_cliente", width=150, anchor="w")
+        tabla.column("nombre_cliente", width=120, anchor="w")
 
         tabla.heading("cedula", text="Cédula")
         tabla.column("cedula", width=100, anchor="w")
@@ -46,16 +45,16 @@ class claseUtilitaria:
 
 
         tabla.heading("id_empleado", text="ID Empleado")
-        tabla.column("id_empleado", width=100, anchor="w")
+        tabla.column("id_empleado", width=80, anchor="w")
 
         tabla.heading("nombre_empleado", text="Empleado")
-        tabla.column("nombre_empleado", width=150, anchor="w")
+        tabla.column("nombre_empleado", width=120, anchor="w")
 
         tabla.heading("hora_ingreso", text="Hora Ingreso")
-        tabla.column("hora_ingreso", width=120, anchor="w")
+        tabla.column("hora_ingreso", width=150, anchor="w")
 
         tabla.heading("hora_salida", text="Hora Salida")
-        tabla.column("hora_salida", width=120, anchor="w")
+        tabla.column("hora_salida", width=150, anchor="w")
 
         tabla.heading("estado", text="Estado Cita")
         tabla.column("estado", width=80, anchor="w")

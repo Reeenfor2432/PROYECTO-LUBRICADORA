@@ -1,5 +1,5 @@
 import mysql.connector
-from Conexion import CConexion
+from Guardado_de_datos.Conexion import CConexion
 
 class manejarServicio:
 
@@ -28,7 +28,7 @@ class manejarServicio:
         try:
             conec = CConexion.ConexionBaseDeDatos()
             cursor = conec.cursor()
-            cursor.callproc("sp_actualizar_servicio", (id, nombre, descripcion, precio))
+            cursor.callproc("sp_actualizar_servicio", (int(id), nombre, descripcion, precio))
             conec.commit(); conec.close()
             print("Servicio actualizado con éxito")
         except mysql.connector.Error as error:
@@ -38,7 +38,7 @@ class manejarServicio:
         try:
             conec = CConexion.ConexionBaseDeDatos()
             cursor = conec.cursor()
-            cursor.callproc("sp_eliminar_servicio", (id,))
+            cursor.callproc("sp_eliminar_servicio", (int(id),))
             conec.commit(); conec.close()
             print("Servicio eliminado con éxito")
         except mysql.connector.Error as error:

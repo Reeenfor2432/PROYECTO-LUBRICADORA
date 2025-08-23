@@ -24,7 +24,7 @@ class vistaCitasFrecuentes:
             try:
                 conec = CConexion.ConexionBaseDeDatos()
                 cursor = conec.cursor()
-                cursor.execute("SELECT * citasClientesFrecuentes")
+                cursor.execute("SELECT * FROM citasClientesFrecuentes")
                 resultado = cursor.fetchall()
                 conec.close()
                 return resultado

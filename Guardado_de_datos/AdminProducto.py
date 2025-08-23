@@ -60,7 +60,7 @@ class manejarProducto:
             cursor = conec.cursor()  # Crear un cursor para ejecutar consultas
 
             # SQL para eliminar un vehiculo por su ID
-            cursor.callproc("sp_eliminar_producto", (id_producto))
+            cursor.callproc("sp_eliminar_producto", (int(id_producto),))
 
             # Ejecutar la consulta con el valor
             conec.commit()  # Confirmar la transacción

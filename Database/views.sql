@@ -12,7 +12,7 @@ SELECT p.id_producto,p.nombre_producto,descripcion, p.precio_unitario, p.stock, 
 FROM producto p 
 JOIN marca_producto m USING (id_marca)
 JOIN categoria c USING (id_categoria) 
-WHERE p.stock < 5
+WHERE p.stock < 5;
 
 CREATE VIEW citasClientesFrecuentes AS
 SELECT c.id_cita,c.id_cliente,cl.nombre_cliente,cl.cedula,c.placa,c.id_empleado,e.nombre AS nombre_empleado,c.hora_ingreso,c.hora_salida,c.estado
