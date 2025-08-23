@@ -56,7 +56,7 @@ class manejarCita:
             cursor = conec.cursor()  # Crear un cursor para ejecutar consultas
 
             # SQL para eliminar un vehiculo por su ID
-            cursor.callproc("sp_actualizar_cita", (id_cita))
+            cursor.callproc("sp_eliminar_cita", (id_cita))
             conec.commit()  # Valores a insertar 
             print(cursor.rowcount, "Registro eliminado con exito")  # Informar si el registro fue eliminado exitosamente
             conec.close()  # Cerrar la conexión a la base de datos

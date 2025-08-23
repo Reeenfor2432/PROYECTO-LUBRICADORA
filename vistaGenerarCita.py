@@ -74,6 +74,8 @@ class vistaCita:
             messagebox.showinfo("OK", "Cita generada.")
             self.actualizarVistaTabla()
 
+            self.asignarProducto()
+
     def modificar(self):
         manejarCita.ModificarCita(self.textId.get(), self.textsal.get(), self.textEst.get())
         messagebox.showinfo("OK", "Cita modificada.")
@@ -83,6 +85,7 @@ class vistaCita:
         manejarCita.EliminarCita(self.textId.get())
         messagebox.showinfo("OK", "Cita eliminada.")
         self.actualizarVistaTabla()
+        self.eliminarProductoUsado()
 
     def actualizarVistaTabla(self):
         self.tabla.delete(*self.tabla.get_children())
@@ -124,6 +127,13 @@ class vistaCita:
         messagebox.showinfo("Se han asignado los productos a la cita") 
         claseUtilitaria.limpiarVentana(self.base) 
         self.generarCita(self.base, self.callbackMenu)
+    
+    def eliminarProductoUsado(self): 
+        sql = """DELETE FROM producto_usado WHERE id_cita = %s""" 
+        datos = (self.id_cita_generada) 
+        cursor.execute(sql, datos) 
+        conn.commit()  
+        claseUtilitaria.limpiarVentana(self.base)
 
 
 
